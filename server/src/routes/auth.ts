@@ -1,17 +1,17 @@
 // External Modules
 import { Router } from "express";
-import { AuthController } from "../controllers/auth";
 
 // Internal Modules
+import { signup, signin } from "../controllers/auth";
 
 // Router Definition
 const AuthRouter: Router = Router();
 
 // Route Definitions
 // create a user
-AuthRouter.post("/signup", AuthController.signup);
+AuthRouter.post("/signup", signup);
 // sign in
-AuthRouter.post("/signin", AuthController.signin);
+AuthRouter.post("/signin", signin);
 // google auth
 AuthRouter.post("/google");
 

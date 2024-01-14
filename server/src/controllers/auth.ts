@@ -1,11 +1,17 @@
-import { Request, Response } from "express";
+// External Modules
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-
-import { User } from "../db/models/User";
 import { genSalt, hash, compare } from "bcrypt";
-import { errorHandler } from "../errors/error.handlers";
 
-async function signup(req: Request, res: Response): Promise<void> {
+// Internal Modules
+import { User } from "../db/models/User";
+
+// Controller Functions
+async function signup(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+): Promise<void> {
 	try {
 		// encrypt password with bcrypt
 		const salt: string = await genSalt(10);
@@ -16,30 +22,33 @@ async function signup(req: Request, res: Response): Promise<void> {
 		// return user
 		res.status(200).json({ data: newUser });
 	} catch (err) {
-		errorHandler(err, res);
+		next(err);
 	}
 }
 
-async function signin(req: Request, res: Response) {
+async function signin(req: Request, res: Response, next: NextFunction) {
+	// load secret key from env vars
+	const JWT: string = process.env.JWT || "";
 	try {
-		// find provided user
+		// find provided user or return error
 		const user = await User.findOne({ name: req.body.name });
-		if (!user) {
-			errorHandler({ status: 404, message: "User not found" }, res);
-		}
-		// check password against hashed value
+		if (!user) return next({ status: 404, message: "User not found." });
+		// check password and return user or error
 		const isCorrect: boolean = await compare(req.body.password, user.password);
 		if (!isCorrect)
-			errorHandler({ status: 400, message: "Incorrect password" }, res);
-		//
-		const token: string = jwt.sign({ id: user._id }, process.env.JWT);
+			return next({ status: 400, message: "Incorrect password." });
+		// create web token for password with cookies
+		const token: string = jwt.sign({ id: user._id }, JWT);
+		// remove hashed password value and return
+		const { password, ...rest } = Object.assign({}, user._doc);
 		res
 			.cookie("access_token", token, { httpOnly: true })
 			.status(200)
-			.json(user);
+			.json(rest);
 	} catch (err) {
-		errorHandler(err, res);
+		next(err);
 	}
 }
 
-export const AuthController = { signup, signin };
+// Exports
+export { signup, signin };

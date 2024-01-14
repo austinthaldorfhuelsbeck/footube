@@ -1,11 +1,22 @@
-import { Request, Response } from "express";
+// External Modules
+import { NextFunction, Request, Response } from "express";
+
+// Internal Modules
 import { ErrorStatus } from "../interfaces/error.status.interface";
 
+// Functions
+// eslint-disable-next-line
 function isAnErrorStatus(object: any): object is ErrorStatus {
+	// checks type of any input for error status structure
 	return "status" in object;
 }
 
-export const errorHandler = (err: unknown, res: Response) => {
+export const errorHandler = (
+	err: unknown,
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	if (isAnErrorStatus(err)) {
 		res.status(err.status).json({ error: err });
 	} else if (err instanceof Error) {
@@ -23,6 +34,7 @@ export const methodNotAllowed = (req: Request, res: Response) => {
 		.json({ message: `${req.method} not allowed for ${req.originalUrl}.` });
 };
 
+// Exports
 export const notFound = (req: Request, res: Response) => {
 	res.status(404).json({ message: `Not found: ${req.originalUrl}.` });
 };
