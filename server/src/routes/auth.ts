@@ -5,7 +5,7 @@ import { Router } from "express";
 import { signup, signin } from "../controllers/auth";
 
 // Router Definition
-const AuthRouter: Router = Router();
+export const AuthRouter: Router = Router();
 
 // Route Definitions
 // create a user
@@ -14,6 +14,3 @@ AuthRouter.post("/signup", signup);
 AuthRouter.post("/signin", signin);
 // google auth
 AuthRouter.post("/google");
-
-// Exports
-export { AuthRouter };

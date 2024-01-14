@@ -5,9 +5,10 @@ import { genSalt, hash, compare } from "bcrypt";
 
 // Internal Modules
 import { User } from "../db/models/User";
+import { removePassword } from "../utils/passwords";
 
 // Controller Functions
-async function signup(
+export async function signup(
 	req: Request,
 	res: Response,
 	next: NextFunction,
@@ -26,7 +27,7 @@ async function signup(
 	}
 }
 
-async function signin(req: Request, res: Response, next: NextFunction) {
+export async function signin(req: Request, res: Response, next: NextFunction) {
 	// load secret key from env vars
 	const JWT: string = process.env.JWT || "";
 	try {
@@ -40,15 +41,11 @@ async function signin(req: Request, res: Response, next: NextFunction) {
 		// create web token for password with cookies
 		const token: string = jwt.sign({ id: user._id }, JWT);
 		// remove hashed password value and return
-		const { password, ...rest } = Object.assign({}, user._doc);
 		res
 			.cookie("access_token", token, { httpOnly: true })
 			.status(200)
-			.json(rest);
+			.json(removePassword(user));
 	} catch (err) {
 		next(err);
 	}
 }
-
-// Exports
-export { signup, signin };

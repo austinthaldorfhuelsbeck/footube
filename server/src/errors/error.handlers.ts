@@ -11,12 +11,12 @@ function isAnErrorStatus(object: any): object is ErrorStatus {
 	return "status" in object;
 }
 
-export const errorHandler = (
+export function errorHandler(
 	err: unknown,
 	req: Request,
 	res: Response,
 	next: NextFunction,
-) => {
+) {
 	if (isAnErrorStatus(err)) {
 		res.status(err.status).json({ error: err });
 	} else if (err instanceof Error) {
@@ -26,15 +26,14 @@ export const errorHandler = (
 	} else {
 		res.status(500).json({ error: { message: "Something went wrong!" } });
 	}
-};
+}
 
-export const methodNotAllowed = (req: Request, res: Response) => {
+export function methodNotAllowed(req: Request, res: Response) {
 	res
 		.status(405)
 		.json({ message: `${req.method} not allowed for ${req.originalUrl}.` });
-};
+}
 
-// Exports
-export const notFound = (req: Request, res: Response) => {
+export function notFound(req: Request, res: Response) {
 	res.status(404).json({ message: `Not found: ${req.originalUrl}.` });
-};
+}
