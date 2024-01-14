@@ -4,6 +4,12 @@ import { removePassword } from "../utils/passwords";
 
 export async function update(req: Request, res: Response, next: NextFunction) {
 	try {
+		// check token for authorization
+		if (req.params.id !== res.locals.user.id)
+			return next({
+				status: 403,
+				message: "You are not authorized to update this user.",
+			});
 		// update on db and return
 		const updatedUser = await User.findByIdAndUpdate(
 			req.params.id,
@@ -19,10 +25,16 @@ export async function update(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function destroy(req: Request, res: Response, next: NextFunction) {
+	// check token for authorization
+	if (req.params.id !== res.locals.user.id)
+		return next({
+			status: 403,
+			message: "You are not authorized to delete this user.",
+		});
 	try {
 		// delete on db and return
 		await User.findByIdAndDelete(req.params.id);
-		res.status(200).json();
+		res.status(200).json("User deleted successfully.");
 	} catch (err) {
 		next(err);
 	}
@@ -44,7 +56,7 @@ export async function subscribe(
 ) {
 	try {
 		// add user to list of subscribers
-		await User.findById(res.locals.user.id, {
+		await User.findByIdAndUpdate(res.locals.user.id, {
 			$push: { subscribedUsers: req.params.id },
 		});
 		// increment subscribers count
@@ -64,7 +76,7 @@ export async function unsubscribe(
 ) {
 	try {
 		// remove user from list of subscribers
-		await User.findById(res.locals.user.id, {
+		await User.findByIdAndUpdate(res.locals.user.id, {
 			$pull: { subscribedUsers: req.params.id },
 		});
 		// decrement subscribers count

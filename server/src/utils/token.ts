@@ -18,12 +18,6 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
 		if (err) return next({ status: 403, message: "Token is invalid." });
 		// pass result thru locals
 		res.locals.user = user;
-		// check user in token for authorization
-		if (req.params.id !== res.locals.user.id)
-			return next({
-				status: 401,
-				message: "You are not authorized for this request.",
-			});
 		return next();
 	});
 }

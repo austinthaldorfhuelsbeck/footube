@@ -43,4 +43,4 @@ const VideoSchema: Schema = new Schema(
 );
 
 // Exports
-export const Video = model("User", VideoSchema);
+export const Video = model("Video", VideoSchema);
