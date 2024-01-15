@@ -2,8 +2,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { genSalt, hash, compare } from "bcrypt";
-
-// Internal Modules
 import { User } from "../db/models/User";
 import { removePassword } from "../utils/passwords";
 
