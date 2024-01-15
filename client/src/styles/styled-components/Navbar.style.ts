@@ -26,12 +26,14 @@ export const Search = styled.div`
 	align-items: center;
 	padding: 5px;
 	border: ${({ theme }) => `1px solid ${theme.soft}`};
+	color: ${({ theme }) => theme.text};
 	border-radius: 3px;
 `;
 
 export const Input = styled.input`
 	border: none;
 	background-color: transparent;
+	color: ${({ theme }) => theme.text};
 `;
 
 export const Button = styled.button`

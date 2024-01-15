@@ -1,5 +1,21 @@
-import { Container } from "../styles/Home.style";
+import { Card } from "../components/Card";
+import { Container } from "../styles/styled-components/Home.style";
 
 export function Home(): JSX.Element {
-	return <Container>Home</Container>;
+	return (
+		<Container>
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+			<Card />
+		</Container>
+	);
 }

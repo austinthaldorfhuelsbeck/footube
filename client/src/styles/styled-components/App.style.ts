@@ -5,8 +5,10 @@ export const Container = styled.div`
 `;
 
 export const Main = styled.div`
-	flex: 5;
+	flex: 6;
 	background-color: ${({ theme }) => theme.bg};
 `;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+	padding: 22px 96px;
+`;

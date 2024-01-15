@@ -1,5 +1,7 @@
 import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from "react";
 
+import { Link } from "react-router-dom";
+
 import HomeIcon from "@mui/icons-material/Home";
 import {
 	AccountCircleOutlined,
@@ -18,17 +20,17 @@ import {
 } from "@mui/icons-material";
 
 import YouTubeLogo from "../img/logo.png";
+import { Hr } from "../styles/util.style";
 import {
 	Button,
 	Container,
-	Hr,
 	Img,
 	Item,
 	Login,
 	Logo,
 	Title,
 	Wrapper,
-} from "../styles/Menu.style";
+} from "../styles/styled-components/Menu.style";
 
 interface MenuProps {
 	darkMode: boolean;
@@ -61,10 +63,12 @@ export function Menu({
 	return (
 		<Container>
 			<Wrapper>
-				<Logo>
-					<Img src={YouTubeLogo} />
-					FakeTube
-				</Logo>
+				<Link to="/">
+					<Logo>
+						<Img src={YouTubeLogo} />
+						FooTube
+					</Logo>
+				</Link>
 				<MenuItem icon={<HomeIcon />} title="Home" />
 				<MenuItem icon={<ExposureOutlined />} title="Explore" />
 				<MenuItem icon={<SubscriptionsOutlined />} title="Subscriptions" />
@@ -80,7 +84,7 @@ export function Menu({
 					</Button>
 				</Login>
 				<Hr />
-				<Title>Best of FakeTube</Title>
+				<Title>Best of FooTube</Title>
 				<MenuItem icon={<LibraryMusicOutlined />} title="Music" />
 				<MenuItem icon={<SportsBasketballOutlined />} title="Sports" />
 				<MenuItem icon={<SportsEsportsOutlined />} title="Gaming" />
@@ -91,7 +95,11 @@ export function Menu({
 				<MenuItem icon={<SettingsOutlined />} title="Settings" />
 				<MenuItem icon={<FlagOutlined />} title="Report" />
 				<MenuItem icon={<HomeIcon />} title="Help" />
-				<MenuItem icon={<HomeIcon />} title="Light Mode" onClick={toggle} />
+				<MenuItem
+					icon={<HomeIcon />}
+					title={darkMode ? "Light mode" : "Dark mode"}
+					onClick={toggle}
+				/>
 			</Wrapper>
 		</Container>
 	);

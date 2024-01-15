@@ -8,7 +8,7 @@ import { Video } from "./pages/Video";
 import { Menu } from "./components/Menu";
 import { Navbar } from "./components/Navbar";
 import { darkTheme, lightTheme } from "./styles/theme";
-import { Container, Main, Wrapper } from "./styles/App.style";
+import { Container, Main, Wrapper } from "./styles/styled-components/App.style";
 
 export function App(): JSX.Element {
 	const [darkMode, setDarkMode] = useState<boolean>(true);

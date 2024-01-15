@@ -6,7 +6,7 @@ import {
 	Input,
 	Search,
 	Wrapper,
-} from "../styles/Navbar.style";
+} from "../styles/styled-components/Navbar.style";
 
 export function Navbar(): JSX.Element {
 	return (

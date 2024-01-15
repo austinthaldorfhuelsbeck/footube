@@ -31,13 +31,12 @@ export const Item = styled.div`
 	align-items: center;
 	gap: 20px;
 	cursor: pointer;
-	padding: 7.5px 0;
-`;
+	padding: 7.5px 5px;
+	border-radius: 5px;
 
-export const Hr = styled.hr`
-	margin: 15px 0px;
-	border-top: ${({ theme }) => `1px solid ${theme.soft}`};
-	border-bottom: none;
+	&:hover {
+		background-color: ${({ theme }) => theme.soft};
+	}
 `;
 
 export const Login = styled.div``;

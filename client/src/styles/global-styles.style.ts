@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyles = createGlobalStyle`
     * {
         box-sizing: border-box;
-        transition: all 0.3s ease-in-out;
+        transition: all 0.2s ease-in-out;
     }
 
     html {
@@ -17,6 +17,23 @@ export const GlobalStyles = createGlobalStyle`
         font-family: "Roboto","Arial",sans-serif;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         overflow-y: scroll;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    h1, h2, p {
+        margin: 0;
+    }
+
+    iframe {
+        border: none;
+    }
+
+    img {
+        object-fit: cover;
     }
 
     #root {
