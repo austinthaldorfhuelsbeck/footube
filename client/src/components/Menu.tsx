@@ -26,6 +26,7 @@ import {
 	Item,
 	Login,
 	Logo,
+	Title,
 	Wrapper,
 } from "../styles/Menu.style";
 
@@ -76,6 +77,7 @@ export function Menu({ darkMode, setDarkMode }: PropsWithChildren<MenuProps>) {
 					</Button>
 				</Login>
 				<Hr />
+				<Title>Best of FakeTube</Title>
 				<MenuItem icon={<LibraryMusicOutlined />} title="Music" />
 				<MenuItem icon={<SportsBasketballOutlined />} title="Sports" />
 				<MenuItem icon={<SportsEsportsOutlined />} title="Gaming" />

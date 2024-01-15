@@ -36,15 +36,16 @@ export const Item = styled.div`
 
 export const Hr = styled.hr`
 	margin: 15px 0px;
-	border: ${({ theme }) => theme.soft};
+	border-top: ${({ theme }) => `1px solid ${theme.soft}`};
+	border-bottom: none;
 `;
 
 export const Login = styled.div``;
 export const Button = styled.button`
 	padding: 5px 15px;
 	background-color: transparent;
-	border: 1px solid var(--teal);
-	color: var(--teal);
+	border: 1px solid #3ea6ff;
+	color: #3ea6ff;
 	border-radius: 3px;
 	font-weight: 500;
 	text-transform: uppercase;
@@ -53,4 +54,11 @@ export const Button = styled.button`
 	display: flex;
 	align-items: center;
 	gap: 5px;
+`;
+
+export const Title = styled.h2`
+	font-size: 14px;
+	font-weight: 500;
+	color: #181818;
+	text-transform: uppercase;
 `;

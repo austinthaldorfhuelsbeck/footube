@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import "./theme.css";
 
 export const GlobalStyles = createGlobalStyle`
     * {
@@ -15,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
     body {
         padding: 0;
         margin: 0;
-        font-family: var(--font-primary);
+        font-family: "Roboto","Arial",sans-serif;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         overflow-y: scroll;
     }
