@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 	flex: 1;
-	background-color: ${({ theme }) => theme.bg};
+	background-color: ${({ theme }) => theme.bgLighter};
 	height: 100vh;
 	color: ${({ theme }) => theme.text};
 	font-size: 14px;
@@ -41,6 +41,7 @@ export const Hr = styled.hr`
 `;
 
 export const Login = styled.div``;
+
 export const Button = styled.button`
 	padding: 5px 15px;
 	background-color: transparent;
@@ -59,6 +60,6 @@ export const Button = styled.button`
 export const Title = styled.h2`
 	font-size: 14px;
 	font-weight: 500;
-	color: #181818;
+	color: #aaa;
 	text-transform: uppercase;
 `;

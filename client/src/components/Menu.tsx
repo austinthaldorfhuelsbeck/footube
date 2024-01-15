@@ -50,7 +50,10 @@ function MenuItem({ icon, title, onClick }: PropsWithChildren<MenuItemProps>) {
 	);
 }
 
-export function Menu({ darkMode, setDarkMode }: PropsWithChildren<MenuProps>) {
+export function Menu({
+	darkMode,
+	setDarkMode,
+}: PropsWithChildren<MenuProps>): JSX.Element {
 	function toggle() {
 		setDarkMode(!darkMode);
 	}
