@@ -1,7 +1,5 @@
 // External Modules
 import { Router } from "express";
-
-// Internal Modules
 import {
 	destroy,
 	dislike,
@@ -10,25 +8,25 @@ import {
 	subscribe,
 	unsubscribe,
 	update,
-} from "../controllers/user";
+} from "../controllers/users";
 import { verifyToken } from "../utils/token";
 
 // Router Definition
-export const UserRouter: Router = Router();
+export const UsersRouter: Router = Router();
 
 // Route Definitions
 // update a user
-UserRouter.put("/:id", verifyToken, update);
+UsersRouter.put("/:id", verifyToken, update);
 // delete a user
-UserRouter.delete("/:id", verifyToken, destroy);
+UsersRouter.delete("/:id", verifyToken, destroy);
 // get a user
-UserRouter.get("/:id", read);
+UsersRouter.get("/:id", read);
 // subscribe a user
-UserRouter.put("/sub/:id", verifyToken, subscribe);
+UsersRouter.put("/sub/:id", verifyToken, subscribe);
 // unsubscribe a user
-UserRouter.put("/unsub/:id", verifyToken, unsubscribe);
+UsersRouter.put("/unsub/:id", verifyToken, unsubscribe);
 // like a video
-UserRouter.put("/like/:videoId", verifyToken, like);
+UsersRouter.put("/like/:videoId", verifyToken, like);
 // dislike a video
-UserRouter.put("/dislike/:videoId", verifyToken, dislike);
+UsersRouter.put("/dislike/:videoId", verifyToken, dislike);
 

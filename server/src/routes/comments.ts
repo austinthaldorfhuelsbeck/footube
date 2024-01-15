@@ -1,10 +1,12 @@
 // External Modules
 import { Router } from "express";
+import { verifyToken } from "../utils/token";
+import { addComment, destroy, getComments } from "../controllers/comments";
 
-// Internal Modules
+// Router Definition
+export const CommentsRouter: Router = Router();
 
-// Router Definitions
-const CommentRouter: Router = Router();
-
-// Exports
-export { CommentRouter };
+// Route Definitions
+CommentsRouter.post("/", verifyToken, addComment);
+CommentsRouter.delete("/:id", verifyToken, destroy);
+CommentsRouter.get("/:videoId", verifyToken, getComments);

@@ -1,7 +1,5 @@
 // External Modules
 import { Router } from "express";
-
-// Internal Modules
 import {
 	addView,
 	destroy,
@@ -13,28 +11,28 @@ import {
 	read,
 	search,
 	update,
-} from "../controllers/video";
+} from "../controllers/videos";
 import { verifyToken } from "../utils/token";
 
 // Router Definitions
-export const VideoRouter: Router = Router();
+export const VideosRouter: Router = Router();
 // create a video
-VideoRouter.post("/", verifyToken, post);
+VideosRouter.post("/", verifyToken, post);
 // list videos of subscribed channels
-VideoRouter.get("/sub", verifyToken, listSub);
+VideosRouter.get("/sub", verifyToken, listSub);
 // list trending
-VideoRouter.get("/trend", listTrending);
+VideosRouter.get("/trend", listTrending);
 // list random
-VideoRouter.get("/random", listRandom);
+VideosRouter.get("/random", listRandom);
 // list tags
-VideoRouter.get("/tags", listTags);
+VideosRouter.get("/tags", listTags);
 // search
-VideoRouter.get("/search", search);
+VideosRouter.get("/search", search);
 // read a video
-VideoRouter.get("/:id", read);
+VideosRouter.get("/:id", read);
 // update a video
-VideoRouter.put("/:id", verifyToken, update);
+VideosRouter.put("/:id", verifyToken, update);
 // delete a video
-VideoRouter.delete("/:id", verifyToken, destroy);
+VideosRouter.delete("/:id", verifyToken, destroy);
 // increment views
-VideoRouter.put("/view/:id", addView);
+VideosRouter.put("/view/:id", addView);

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../db/models/User";
 import { removePassword } from "../utils/passwords";
+import { Video } from "../db/models/Video";
 
 export async function update(req: Request, res: Response, next: NextFunction) {
 	try {
@@ -88,14 +89,28 @@ export async function unsubscribe(
 }
 
 export async function like(req: Request, res: Response, next: NextFunction) {
+	const { id } = res.locals.user;
+	const { videoId } = req.params;
 	try {
+		await Video.findByIdAndUpdate(videoId, {
+			$addToSet: { likes: id },
+			$pull: { dislikes: id },
+		});
+		res.status(200).json("Video successfully liked.");
 	} catch (err) {
 		next(err);
 	}
 }
 
 export async function dislike(req: Request, res: Response, next: NextFunction) {
+	const { id } = res.locals.user;
+	const { videoId } = req.params;
 	try {
+		await Video.findByIdAndUpdate(videoId, {
+			$addToSet: { dislikes: id },
+			$pull: { likes: id },
+		});
+		res.status(200).json("Video successfully disliked.");
 	} catch (err) {
 		next(err);
 	}

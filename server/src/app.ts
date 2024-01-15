@@ -3,11 +3,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-
-// Internal Modules
-import { UserRouter } from "./routes/users";
-import { VideoRouter } from "./routes/videos";
-import { CommentRouter } from "./routes/comments";
+import { UsersRouter } from "./routes/users";
+import { VideosRouter } from "./routes/videos";
+import { CommentsRouter } from "./routes/comments";
 import { AuthRouter } from "./routes/auth";
 import { errorHandler, notFound } from "./errors/error.handlers";
 
@@ -29,9 +27,9 @@ app.use(cookieParser());
 
 // Route handlers
 app.use("/api/auth", AuthRouter);
-app.use("/api/users", UserRouter);
-app.use("/api/videos", VideoRouter);
-app.use("/api/comments", CommentRouter);
+app.use("/api/users", UsersRouter);
+app.use("/api/videos", VideosRouter);
+app.use("/api/comments", CommentsRouter);
 
 // Error handlers
 app.use(notFound);
