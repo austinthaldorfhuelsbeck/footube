@@ -7,6 +7,7 @@ import { Home } from "./pages/Home";
 import { Video } from "./pages/Video";
 import { Menu } from "./components/Menu";
 import { Navbar } from "./components/Navbar";
+import { SignIn } from "./components/SignIn";
 import { darkTheme, lightTheme } from "./styles/theme";
 import { Container, Main, Wrapper } from "./styles/styled-components/App.style";
 
@@ -23,6 +24,7 @@ export function App(): JSX.Element {
 						<Routes>
 							<Route path="/">
 								<Route index element={<Home />} />
+								<Route path="signin" element={<SignIn />} />
 								<Route path="video">
 									<Route path=":id" element={<Video />} />
 								</Route>

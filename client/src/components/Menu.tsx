@@ -78,10 +78,12 @@ export function Menu({
 				<Hr />
 				<Login>
 					Sign in to like videos, comment, and subscribe.
-					<Button>
-						<AccountCircleOutlined />
-						Sign in
-					</Button>
+					<Link to="signin">
+						<Button>
+							<AccountCircleOutlined />
+							Sign in
+						</Button>
+					</Link>
 				</Login>
 				<Hr />
 				<Title>Best of FooTube</Title>

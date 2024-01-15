@@ -7,6 +7,7 @@ import {
 	Search,
 	Wrapper,
 } from "../styles/styled-components/Navbar.style";
+import { Link } from "react-router-dom";
 
 export function Navbar(): JSX.Element {
 	return (
@@ -16,10 +17,12 @@ export function Navbar(): JSX.Element {
 					<Input placeholder="Search" />
 					<SearchOutlined />
 				</Search>
-				<Button>
-					<AccountCircleOutlined />
-					Sign In
-				</Button>
+				<Link to="signin">
+					<Button>
+						<AccountCircleOutlined />
+						Sign In
+					</Button>
+				</Link>
 			</Wrapper>
 		</Container>
 	);
