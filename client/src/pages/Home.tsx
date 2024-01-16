@@ -2,9 +2,10 @@ import { PropsWithChildren, useEffect, useState } from "react";
 
 import axios, { AxiosResponse } from "axios";
 
+import { apiUrl } from "../utils/apiUrl";
 import { Card } from "../components/Card";
-import { Container } from "../styles/styled-components/Home.style";
 import { IVideo } from "../interfaces/models";
+import { Container } from "../styles/styled-components/Home.style";
 
 interface ComponentProps {
 	type: string;
@@ -15,7 +16,6 @@ export function Home({ type }: PropsWithChildren<ComponentProps>): JSX.Element {
 
 	useEffect(() => {
 		async function fetchVideos() {
-			const apiUrl: string = process.env.REACT_APP_API_BASE_URL || "";
 			// TODO error handling
 			const res: AxiosResponse = await axios.get(`${apiUrl}/videos/${type}`);
 			if (res.data) setVideos(res.data);

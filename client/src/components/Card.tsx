@@ -2,7 +2,9 @@ import { PropsWithChildren, useEffect, useState } from "react";
 
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import axios, { AxiosResponse } from "axios";
 
+import { apiUrl } from "../utils/apiUrl";
 import { IUser, IVideo } from "../interfaces/models";
 import {
 	ChannelImage,
@@ -14,7 +16,6 @@ import {
 	TextContainer,
 	Title,
 } from "../styles/styled-components/Card.style";
-import axios, { AxiosResponse } from "axios";
 
 interface ComponentProps {
 	type?: string;
@@ -29,7 +30,6 @@ export function Card({
 
 	useEffect(() => {
 		async function fetchUser() {
-			const apiUrl: string = process.env.REACT_APP_API_BASE_URL || "";
 			// TODO error handling
 			const res: AxiosResponse = await axios.get(
 				`${apiUrl}/users/${video.userId}`,
