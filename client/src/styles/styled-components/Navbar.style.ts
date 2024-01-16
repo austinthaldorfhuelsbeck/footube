@@ -50,3 +50,18 @@ export const Button = styled.button`
 	align-items: center;
 	gap: 5px;
 `;
+
+export const User = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 500;
+	color: ${({ theme }) => theme.text};
+`;
+
+export const Avatar = styled.img`
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background-color: #999;
+`;

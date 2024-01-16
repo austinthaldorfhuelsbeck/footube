@@ -31,6 +31,8 @@ import {
 	Title,
 	Wrapper,
 } from "../styles/styled-components/Menu.style";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 interface MenuProps {
 	darkMode: boolean;
@@ -56,6 +58,8 @@ export function Menu({
 	darkMode,
 	setDarkMode,
 }: PropsWithChildren<MenuProps>): JSX.Element {
+	const currentUser = useSelector((state: RootState) => state.user.currentUser);
+
 	function toggle() {
 		setDarkMode(!darkMode);
 	}
@@ -82,16 +86,20 @@ export function Menu({
 				<MenuItem icon={<VideoLibraryOutlined />} title="Library" />
 				<MenuItem icon={<HistoryOutlined />} title="History" />
 				<Hr />
-				<Login>
-					Sign in to like videos, comment, and subscribe.
-					<Link to="signin">
-						<Button>
-							<AccountCircleOutlined />
-							Sign in
-						</Button>
-					</Link>
-				</Login>
-				<Hr />
+				{!currentUser && (
+					<>
+						<Login>
+							Sign in to like videos, comment, and subscribe.
+							<Link to="signin">
+								<Button>
+									<AccountCircleOutlined />
+									Sign in
+								</Button>
+							</Link>
+						</Login>
+						<Hr />
+					</>
+				)}
 				<Title>Best of FooTube</Title>
 				<MenuItem icon={<LibraryMusicOutlined />} title="Music" />
 				<MenuItem icon={<SportsBasketballOutlined />} title="Sports" />

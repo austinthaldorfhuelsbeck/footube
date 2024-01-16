@@ -14,6 +14,9 @@ import {
 	Title,
 	Wrapper,
 } from "../styles/styled-components/SignIn.style";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 
 interface ISignIn {
 	name: string;
@@ -28,6 +31,7 @@ export function SignIn(): JSX.Element {
 		password: "",
 	};
 	const [formData, setFormData] = useState<ISignIn>(initialFormData);
+	const dispatch: Dispatch = useDispatch();
 
 	function onChange(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.target;
@@ -35,13 +39,16 @@ export function SignIn(): JSX.Element {
 	}
 	async function onLogin(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault();
+		dispatch(loginStart());
 		try {
 			const res: AxiosResponse = await axios.post(
 				`${apiUrl}/auth/signin`,
 				formData,
 			);
-			if (res.data) console.log(res.data);
-		} catch (err) {}
+			if (res.data) dispatch(loginSuccess(res.data));
+		} catch (err) {
+			dispatch(loginFailure());
+		}
 	}
 
 	return (
