@@ -1,4 +1,9 @@
+import { PropsWithChildren, useEffect, useState } from "react";
+
+import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+
+import { IUser, IVideo } from "../interfaces/models";
 import {
 	ChannelImage,
 	ChannelName,
@@ -9,26 +14,41 @@ import {
 	TextContainer,
 	Title,
 } from "../styles/styled-components/Card.style";
-import { PropsWithChildren } from "react";
+import axios, { AxiosResponse } from "axios";
 
 interface ComponentProps {
 	type?: string;
+	video: IVideo;
 }
 
-export function Card({ type }: PropsWithChildren<ComponentProps>): JSX.Element {
+export function Card({
+	type,
+	video,
+}: PropsWithChildren<ComponentProps>): JSX.Element {
+	const [user, setUser] = useState<IUser | undefined>();
+
+	useEffect(() => {
+		async function fetchUser() {
+			const apiUrl: string = process.env.REACT_APP_API_BASE_URL || "";
+			// TODO error handling
+			const res: AxiosResponse = await axios.get(
+				`${apiUrl}/users/${video.userId}`,
+			);
+			if (res.data) setUser(res.data);
+		}
+		fetchUser();
+	}, [video.userId]);
+
 	return (
 		<Link to="/video/test" style={{ textDecoration: "none" }}>
 			<Container type={type}>
-				<Image
-					src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/thumbnail-background-youtube-2023-design-template-d1ba8caa87a7e45a222132372cd336a7_screen.jpg?ts=1674608286"
-					type={type}
-				/>
+				<Image src={video.img} type={type} />
 				<Details type={type}>
-					<ChannelImage type={type} />
+					<ChannelImage type={type} src={user?.img} />
 					<TextContainer>
-						<Title>Test Video</Title>
-						<ChannelName>FooTube</ChannelName>
-						<Info>660,908 views • 1 day ago</Info>
+						<Title>{video.title}</Title>
+						<ChannelName>{user?.name}</ChannelName>
+						<Info>{`${video.views} views • ${format(video.createdAt)}`}</Info>
 					</TextContainer>
 				</Details>
 			</Container>

@@ -4,6 +4,7 @@ export const Container = styled.div`
 	position: sticky;
 	top: 0;
 	height: 56px;
+	background-color: ${({ theme }) => theme.bgLighter};
 `;
 
 export const Wrapper = styled.div`

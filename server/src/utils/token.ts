@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
 	// get secret key and token
 	const JWT: string = process.env.JWT || "";
-	const token: string = req.cookies.access_token.toString();
+	const token: string = req.cookies.access_token?.toString() || "";
 	// return 401 if no token
 	if (!token)
 		return next({

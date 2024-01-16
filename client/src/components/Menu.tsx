@@ -69,9 +69,15 @@ export function Menu({
 						FooTube
 					</Logo>
 				</Link>
-				<MenuItem icon={<HomeIcon />} title="Home" />
-				<MenuItem icon={<ExposureOutlined />} title="Explore" />
-				<MenuItem icon={<SubscriptionsOutlined />} title="Subscriptions" />
+				<Link to="/">
+					<MenuItem icon={<HomeIcon />} title="Home" />
+				</Link>
+				<Link to="/trending">
+					<MenuItem icon={<ExposureOutlined />} title="Explore" />
+				</Link>
+				<Link to="subscriptions">
+					<MenuItem icon={<SubscriptionsOutlined />} title="Subscriptions" />
+				</Link>
 				<Hr />
 				<MenuItem icon={<VideoLibraryOutlined />} title="Library" />
 				<MenuItem icon={<HistoryOutlined />} title="History" />

@@ -52,6 +52,7 @@ export const More = styled.div`
 	margin-top: 10px;
 	font-size: 12px;
 	color: ${({ theme }) => theme.textSoft};
+	cursor: default;
 `;
 
 export const Links = styled.div`
@@ -60,4 +61,5 @@ export const Links = styled.div`
 
 export const Link = styled.span`
 	margin-left: 30px;
+	cursor: pointer;
 `;

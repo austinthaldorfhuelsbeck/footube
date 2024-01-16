@@ -80,11 +80,11 @@ export function Video(): JSX.Element {
 				<Comments />
 			</Content>
 			<Recommendation>
+				{/* <Card type="sm" />
 				<Card type="sm" />
 				<Card type="sm" />
 				<Card type="sm" />
-				<Card type="sm" />
-				<Card type="sm" />
+				<Card type="sm" /> */}
 			</Recommendation>
 		</Container>
 	);
