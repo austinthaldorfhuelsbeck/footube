@@ -44,6 +44,7 @@ export function SignIn(): JSX.Element {
 			const res: AxiosResponse = await axios.post(
 				`${apiUrl}/auth/signin`,
 				formData,
+				{ withCredentials: true },
 			);
 			if (res.data) dispatch(loginSuccess(res.data));
 		} catch (err) {
