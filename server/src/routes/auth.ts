@@ -2,7 +2,7 @@
 import { Router } from "express";
 
 // Internal Modules
-import { signup, signin } from "../controllers/auth";
+import { signup, signin, googleAuth } from "../controllers/auth";
 
 // Router Definition
 export const AuthRouter: Router = Router();
@@ -13,4 +13,4 @@ AuthRouter.post("/signup", signup);
 // sign in
 AuthRouter.post("/signin", signin);
 // google auth
-AuthRouter.post("/google");
+AuthRouter.post("/google", googleAuth);

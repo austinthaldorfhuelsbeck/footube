@@ -28,10 +28,11 @@ export function Navbar(): JSX.Element {
 					<Input placeholder="Search" />
 					<SearchOutlined />
 				</Search>
+				{/* TODO: logout button */}
 				{currentUser ? (
 					<User>
 						<VideoCallOutlined />
-						<Avatar />
+						<Avatar src={currentUser.img} />
 						{currentUser.name}
 					</User>
 				) : (

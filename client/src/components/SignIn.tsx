@@ -1,8 +1,12 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 
+import { Dispatch } from "redux";
+import { useDispatch } from "react-redux";
 import axios, { AxiosResponse } from "axios";
 
 import { apiUrl } from "../utils/apiUrl";
+import { auth, provider } from "../firebase";
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import {
 	Button,
 	Container,
@@ -14,9 +18,7 @@ import {
 	Title,
 	Wrapper,
 } from "../styles/styled-components/SignIn.style";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
-import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
+import { UserCredential, signInWithPopup } from "firebase/auth";
 
 interface ISignIn {
 	name: string;
@@ -51,6 +53,25 @@ export function SignIn(): JSX.Element {
 			dispatch(loginFailure());
 		}
 	}
+	async function signInWithGoogle(e: SyntheticEvent<HTMLButtonElement>) {
+		e.preventDefault();
+		dispatch(loginStart());
+		try {
+			const userRes: UserCredential = await signInWithPopup(auth, provider);
+			const res: AxiosResponse = await axios.post(
+				`${apiUrl}/auth/google`,
+				{
+					name: userRes.user.displayName,
+					email: userRes.user.email,
+					img: userRes.user.photoURL,
+				},
+				{ withCredentials: true },
+			);
+			if (res.data) dispatch(loginSuccess(res.data));
+		} catch (err) {
+			dispatch(loginFailure());
+		}
+	}
 
 	return (
 		<Container>
@@ -65,6 +86,8 @@ export function SignIn(): JSX.Element {
 					onChange={onChange}
 				/>
 				<Button onClick={onLogin}>Sign in</Button>
+				<Title>or</Title>
+				<Button onClick={signInWithGoogle}>Sign in with Google</Button>
 				<Title>or</Title>
 				<Input name="name" placeholder="username" onChange={onChange} />
 				<Input

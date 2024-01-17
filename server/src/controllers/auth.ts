@@ -47,3 +47,39 @@ export async function signin(req: Request, res: Response, next: NextFunction) {
 		next(err);
 	}
 }
+
+export async function googleAuth(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
+	// load secret key from env vars
+	const JWT: string = process.env.JWT || "";
+	try {
+		const user = await User.findOne({ email: req.body.email });
+		if (user) {
+			// create web token for password with cookies
+			const token: string = jwt.sign({ id: user._id }, JWT);
+			// remove hashed password value and return
+			res
+				.cookie("access_token", token, { httpOnly: true })
+				.status(200)
+				.json(user._doc);
+		} else {
+			const newUser = new User({
+				...req.body,
+				fromGoogle: true,
+			});
+			const savedUser = await newUser.save();
+			// create web token for password with cookies
+			const token: string = jwt.sign({ id: savedUser._id }, JWT);
+			// remove hashed password value and return
+			res
+				.cookie("access_token", token, { httpOnly: true })
+				.status(200)
+				.json(savedUser._doc);
+		}
+	} catch (err) {
+		next(err);
+	}
+}
