@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 	res.contentType("application/json; charset=utf-8");
 	next();
 });
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "*" }));
 app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", req.headers.origin);
 	res.header("Access-Control-Allow-Credentials", "true");

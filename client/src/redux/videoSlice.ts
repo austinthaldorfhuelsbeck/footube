@@ -20,24 +20,43 @@ export const videoSlice = createSlice({
 	// `createSlice` will infer the state type from the `initialState` argument
 	initialState,
 	reducers: {
-		loginStart: (state) => {
+		fetchStart: (state) => {
 			state.loading = true;
 		},
-		loginSuccess: (state, action: PayloadAction<IVideo>) => {
+		fetchSuccess: (state, action: PayloadAction<IVideo>) => {
 			state.loading = false;
 			state.currentVideo = action.payload;
 		},
-		loginFailure: (state) => {
+		fetchFailure: (state) => {
 			state.loading = false;
 			state.error = true;
 		},
-		logout: (state) => {
-			state = initialState;
+		like: (state, action) => {
+			if (!state.currentVideo?.likes.includes(action.payload)) {
+				state.currentVideo?.likes.push(action.payload);
+				state.currentVideo?.dislikes.splice(
+					state.currentVideo.dislikes.findIndex(
+						(userId) => userId === action.payload,
+					),
+					1,
+				);
+			}
+		},
+		dislike: (state, action) => {
+			if (!state.currentVideo?.dislikes.includes(action.payload)) {
+				state.currentVideo?.dislikes.push(action.payload);
+				state.currentVideo?.likes.splice(
+					state.currentVideo.likes.findIndex(
+						(userId) => userId === action.payload,
+					),
+					1,
+				);
+			}
 		},
 	},
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } =
+export const { fetchStart, fetchSuccess, fetchFailure, like, dislike } =
 	videoSlice.actions;
 
 export default videoSlice.reducer;

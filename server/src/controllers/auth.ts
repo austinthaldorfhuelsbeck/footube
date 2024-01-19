@@ -77,7 +77,7 @@ export async function googleAuth(
 			res
 				.cookie("access_token", token, { httpOnly: true })
 				.status(200)
-				.json(savedUser._doc);
+				.json(removePassword(savedUser._doc));
 		}
 	} catch (err) {
 		next(err);

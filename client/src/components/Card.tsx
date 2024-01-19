@@ -4,7 +4,6 @@ import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 
-import { apiUrl } from "../utils/apiUrl";
 import { IUser, IVideo } from "../interfaces/models";
 import {
 	ChannelImage,
@@ -31,16 +30,14 @@ export function Card({
 	useEffect(() => {
 		async function fetchUser() {
 			// TODO error handling
-			const res: AxiosResponse = await axios.get(
-				`${apiUrl}/users/${video.userId}`,
-			);
+			const res: AxiosResponse = await axios.get(`/api/users/${video.userId}`);
 			if (res.data) setUser(res.data);
 		}
 		fetchUser();
 	}, [video.userId]);
 
 	return (
-		<Link to="/video/test" style={{ textDecoration: "none" }}>
+		<Link to={`/video/${video._id}`} style={{ textDecoration: "none" }}>
 			<Container type={type}>
 				<Image src={video.img} type={type} />
 				<Details type={type}>

@@ -4,7 +4,6 @@ import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import axios, { AxiosResponse } from "axios";
 
-import { apiUrl } from "../utils/apiUrl";
 import { auth, provider } from "../firebase";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import {
@@ -44,7 +43,7 @@ export function SignIn(): JSX.Element {
 		dispatch(loginStart());
 		try {
 			const res: AxiosResponse = await axios.post(
-				`${apiUrl}/auth/signin`,
+				`/api/auth/signin`,
 				formData,
 				{ withCredentials: true },
 			);
@@ -59,7 +58,7 @@ export function SignIn(): JSX.Element {
 		try {
 			const userRes: UserCredential = await signInWithPopup(auth, provider);
 			const res: AxiosResponse = await axios.post(
-				`${apiUrl}/auth/google`,
+				`/api/auth/google`,
 				{
 					name: userRes.user.displayName,
 					email: userRes.user.email,

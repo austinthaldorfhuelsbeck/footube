@@ -58,7 +58,7 @@ export function Menu({
 	darkMode,
 	setDarkMode,
 }: PropsWithChildren<MenuProps>): JSX.Element {
-	const currentUser = useSelector((state: RootState) => state.user.currentUser);
+	const { currentUser } = useSelector((state: RootState) => state.user);
 
 	function toggle() {
 		setDarkMode(!darkMode);

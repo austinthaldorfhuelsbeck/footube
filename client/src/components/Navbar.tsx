@@ -19,7 +19,7 @@ import {
 } from "../styles/styled-components/Navbar.style";
 
 export function Navbar(): JSX.Element {
-	const currentUser = useSelector((state: RootState) => state.user.currentUser);
+	const { currentUser } = useSelector((state: RootState) => state.user);
 
 	return (
 		<Container>
