@@ -40,6 +40,7 @@ import {
 	Title,
 	Wrapper,
 } from "../styles/styled-components/Video.style";
+import { subscribe } from "../redux/userSlice";
 
 export function Video(): JSX.Element {
 	const { currentUser } = useSelector((state: RootState) => state.user);
@@ -55,16 +56,20 @@ export function Video(): JSX.Element {
 
 	// handlers
 	async function onLike() {
-		await axios.put(`/api/users/like/${currentVideo?._id}`, {
-			withCredentials: true,
-		});
+		await axios.put(`/api/users/like/${currentVideo?._id}`);
 		dispatch(like(currentUser?._id));
 	}
 	async function onDislike() {
-		await axios.put(`/api/users/dislike/${currentVideo?._id}`, {
-			withCredentials: true,
-		});
+		await axios.put(`/api/users/dislike/${currentVideo?._id}`);
 		dispatch(dislike(currentUser?._id));
+	}
+	async function onSub() {
+		if (channel?._id) {
+			currentUser?.subscribedUsers.includes(channel._id)
+				? await axios.put(`/api/users/unsub/${channel._id}`)
+				: await axios.put(`/api/users/sub/${channel._id}`);
+			dispatch(subscribe(channel._id));
+		}
 	}
 
 	useEffect(() => {
@@ -144,7 +149,11 @@ export function Video(): JSX.Element {
 									<Description>{currentVideo.desc}</Description>
 								</ChannelDetail>
 							</ChannelInfo>
-							<Subscribe>Subscribe</Subscribe>
+							<Subscribe onClick={onSub}>
+								{currentUser?.subscribedUsers?.includes(channel._id)
+									? "Subscribed"
+									: "Subscribe"}
+							</Subscribe>
 						</Channel>
 					)}
 					<Hr />

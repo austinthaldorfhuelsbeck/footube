@@ -16,9 +16,7 @@ export function Home({ type }: PropsWithChildren<ComponentProps>): JSX.Element {
 	useEffect(() => {
 		async function fetchVideos() {
 			// TODO error handling
-			const res: AxiosResponse = await axios.get(`/api/videos/${type}`, {
-				withCredentials: true,
-			});
+			const res: AxiosResponse = await axios.get(`/api/videos/${type}`);
 			if (res.data) setVideos(res.data);
 		}
 		fetchVideos();
