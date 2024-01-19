@@ -19,9 +19,10 @@ import {
 import { Card } from "../components/Card";
 import { RootState } from "../redux/store";
 import { IUser } from "../interfaces/models";
+import { subscribe } from "../redux/userSlice";
 import { Comments } from "../components/Comments";
-import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { CircleImg, Hr } from "../styles/util.style";
+import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import {
 	Button,
 	Buttons,
@@ -38,14 +39,13 @@ import {
 	Recommendation,
 	Subscribe,
 	Title,
-	Wrapper,
+	VideoFrame,
 } from "../styles/styled-components/Video.style";
-import { subscribe } from "../redux/userSlice";
 
 export function Video(): JSX.Element {
+	// Redux
 	const { currentUser } = useSelector((state: RootState) => state.user);
 	const { currentVideo } = useSelector((state: RootState) => state.video);
-
 	const dispatch: Dispatch = useDispatch();
 
 	// find video id from path
@@ -72,20 +72,15 @@ export function Video(): JSX.Element {
 		}
 	}
 
+	// fetch video and user on page load
 	useEffect(() => {
 		async function fetchData() {
 			// TODO error handling
-			const videoRes: AxiosResponse = await axios.get(`/api/videos/${id}`, {
-				withCredentials: true,
-			});
-
+			const videoRes: AxiosResponse = await axios.get(`/api/videos/${id}`);
 			if (videoRes.data) {
 				dispatch(fetchSuccess(videoRes.data));
 				const userRes: AxiosResponse = await axios.get(
 					`/api/users/${videoRes.data.userId}`,
-					{
-						withCredentials: true,
-					},
 				);
 				if (userRes.data) setChannel(userRes.data);
 			}
@@ -97,16 +92,7 @@ export function Video(): JSX.Element {
 		<Container>
 			{currentVideo && (
 				<Content>
-					<Wrapper>
-						<iframe
-							width="560"
-							height="315"
-							src="https://www.youtube.com/embed/CCF-xV3RSSs?si=vt007ibCwn1lDero"
-							title="YouTube video player"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowFullScreen
-						></iframe>
-					</Wrapper>
+					<VideoFrame src={currentVideo?.video} />
 					<Title>{currentVideo.title}</Title>
 					<Details>
 						<Info>
@@ -157,16 +143,10 @@ export function Video(): JSX.Element {
 						</Channel>
 					)}
 					<Hr />
-					<Comments />
+					<Comments videoId={currentVideo._id} />
 				</Content>
 			)}
-			<Recommendation>
-				{/* <Card type="sm" />
-				<Card type="sm" />
-				<Card type="sm" />
-				<Card type="sm" />
-				<Card type="sm" /> */}
-			</Recommendation>
+			<Recommendation></Recommendation>
 		</Container>
 	);
 }

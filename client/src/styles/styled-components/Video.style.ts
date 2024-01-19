@@ -5,7 +5,11 @@ export const Container = styled.div`
 	gap: 24px;
 `;
 
-export const Wrapper = styled.div``;
+export const VideoFrame = styled.video`
+	max-height: 720px;
+	width: 100%;
+	object-fit: cover;
+`;
 
 export const Content = styled.div`
 	flex: 5;

@@ -1,3 +1,5 @@
+import { PropsWithChildren, useEffect, useState } from "react";
+import { IComment, IUser } from "../interfaces/models";
 import {
 	Container,
 	Date,
@@ -6,20 +8,37 @@ import {
 	Text,
 } from "../styles/styled-components/Comment.style";
 import { CircleImg } from "../styles/util.style";
+import axios, { AxiosResponse } from "axios";
+import { format } from "timeago.js";
 
-export function Comment(): JSX.Element {
+interface ComponentProps {
+	comment: IComment;
+}
+
+export function Comment({
+	comment,
+}: PropsWithChildren<ComponentProps>): JSX.Element {
+	// state for loading the channel that posted the comment
+	const [channel, setChannel] = useState<IUser | undefined>();
+
+	// fetch video and user on page load
+	useEffect(() => {
+		async function fetchChannel() {
+			const res: AxiosResponse = await axios.get(
+				`/api/users/${comment.userId}`,
+			);
+			if (res.data) setChannel(res.data);
+		}
+		fetchChannel();
+	}, [comment.userId]);
+
 	return (
 		<Container>
-			<CircleImg src="https://austinthaldorfhuelsbeck.github.io/ath-portf/img/ath.jpeg" />
+			<CircleImg src={channel?.img} />
 			<Details>
-				<Name>John Doe</Name>
-				<Date>1 day ago</Date>
-				<Text>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga dolorum
-					nostrum exercitationem, minus nesciunt repudiandae saepe sint earum ut
-					reprehenderit animi, porro doloremque iste quaerat autem rem et
-					consequatur! Atque.
-				</Text>
+				<Name>{channel?.name}</Name>
+				<Date>{format(comment.createdAt)}</Date>
+				<Text>{comment.desc}</Text>
 			</Details>
 		</Container>
 	);
