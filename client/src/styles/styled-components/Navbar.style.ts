@@ -29,11 +29,16 @@ export const Search = styled.div`
 	border: ${({ theme }) => `1px solid ${theme.soft}`};
 	color: ${({ theme }) => theme.text};
 	border-radius: 3px;
+	svg {
+		cursor: pointer;
+	}
 `;
 
 export const Input = styled.input`
 	border: none;
 	background-color: transparent;
+	outline: none;
+	width: 100%;
 	color: ${({ theme }) => theme.text};
 `;
 

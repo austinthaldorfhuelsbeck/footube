@@ -72,9 +72,9 @@ export function Upload({
 	}
 	async function onUpload(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault();
-		const res = await axios.post("/video", { ...inputs, tags });
+		const res = await axios.post("/api/videos", { ...inputs, tags });
 		setIsOpen(false);
-		res.status === 200 && navigate(`/videos/${res.data._id}`);
+		res.status === 200 && navigate(`/video/${res.data._id}`);
 	}
 
 	// load files to firebase when the user selects a file
@@ -92,9 +92,7 @@ export function Upload({
 			(snapshot) => {
 				const progress: number =
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				urlType === "imgUrl"
-					? setImgPercent(progress)
-					: setVideoPercent(progress);
+				urlType === "img" ? setImgPercent(progress) : setVideoPercent(progress);
 				switch (snapshot.state) {
 					case "paused":
 						console.log("Paused");
@@ -105,22 +103,24 @@ export function Upload({
 						break;
 				}
 			},
-			(error) => {},
+			(error) => {
+				console.log(error);
+			},
 			() => {
 				// Upload completed successfully, now we can get the download URL
 				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 					setInputs((prev: IInputs) => {
-						return { ...prev, urlType: downloadURL };
+						return { ...prev, [urlType]: downloadURL };
 					});
 				});
 			},
 		);
 	}
 	useEffect(() => {
-		if (video) uploadFile(video, "videoUrl");
+		if (video) uploadFile(video, "video");
 	}, [video]);
 	useEffect(() => {
-		if (img) uploadFile(img, "imgUrl");
+		if (img) uploadFile(img, "img");
 	}, [img]);
 
 	return (

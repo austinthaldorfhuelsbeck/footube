@@ -15,10 +15,6 @@ export const Content = styled.div`
 	flex: 5;
 `;
 
-export const Recommendation = styled.div`
-	flex: 2;
-`;
-
 export const Title = styled.h1`
 	font-size: 18px;
 	font-weight: 400;

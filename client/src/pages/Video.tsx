@@ -36,11 +36,11 @@ import {
 	Description,
 	Details,
 	Info,
-	Recommendation,
 	Subscribe,
 	Title,
 	VideoFrame,
 } from "../styles/styled-components/Video.style";
+import { Recommended } from "../components/Recommended";
 
 export function Video(): JSX.Element {
 	// Redux
@@ -92,7 +92,7 @@ export function Video(): JSX.Element {
 		<Container>
 			{currentVideo && (
 				<Content>
-					<VideoFrame src={currentVideo?.video} controls />
+					<VideoFrame src={currentVideo?.video} controls autoPlay />
 					<Title>{currentVideo.title}</Title>
 					<Details>
 						<Info>
@@ -146,7 +146,7 @@ export function Video(): JSX.Element {
 					<Comments videoId={currentVideo._id} />
 				</Content>
 			)}
-			<Recommendation></Recommendation>
+			<Recommended tags={currentVideo?.tags}></Recommended>
 		</Container>
 	);
 }
