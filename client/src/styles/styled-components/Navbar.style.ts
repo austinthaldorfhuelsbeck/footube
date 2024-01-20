@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
 	position: relative;
 `;
 
-export const Search = styled.div`
+export const Search = styled.form`
 	position: absolute;
 	width: 40%;
 	left: 0;
@@ -63,6 +63,7 @@ export const User = styled.div`
 	font-weight: 500;
 	color: ${({ theme }) => theme.text};
 	cursor: default;
+	font-size: 12px;
 	svg,
 	img {
 		cursor: pointer;
@@ -74,4 +75,16 @@ export const Avatar = styled.img`
 	height: 32px;
 	border-radius: 50%;
 	background-color: #999;
+`;
+
+export const ContextMenu = styled.div`
+	background-color: ${({ theme }) => `${theme.textSoft}a7`};
+	position: absolute;
+	top: 50px;
+	padding: 10px;
+	cursor: pointer;
+	border-radius: 3px;
+	&:hover {
+		background-color: ${({ theme }) => theme.textSoft};
+	}
 `;

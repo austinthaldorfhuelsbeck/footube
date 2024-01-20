@@ -1,5 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { FormEvent, SyntheticEvent, useEffect, useState } from "react";
+
+import { Dispatch } from "redux";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
 	AccountCircleOutlined,
@@ -7,18 +11,19 @@ import {
 	VideoCallOutlined,
 } from "@mui/icons-material";
 
+import { Upload } from "./Upload";
 import { RootState } from "../redux/store";
+import { logout } from "../redux/userSlice";
 import {
 	Avatar,
 	Button,
 	Container,
+	ContextMenu,
 	Input,
 	Search,
 	User,
 	Wrapper,
 } from "../styles/styled-components/Navbar.style";
-import { useState } from "react";
-import { Upload } from "./Upload";
 
 export function Navbar(): JSX.Element {
 	// react router
@@ -26,27 +31,52 @@ export function Navbar(): JSX.Element {
 
 	// redux
 	const { currentUser } = useSelector((state: RootState) => state.user);
+	const dispatch: Dispatch = useDispatch();
 
+	// state for show/hide logout context menu
+	const [uploadIsOpen, setUploadIsOpen] = useState<boolean>(false);
 	// state for show/hide video upload modal dialog
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [logoutIsOpen, setLogoutIsOpen] = useState<boolean>(false);
+	// state for searching
 	const [q, setQ] = useState<string>("");
+
+	// handlers
+	function onSearch(
+		e: FormEvent<HTMLFormElement> | SyntheticEvent<SVGSVGElement>,
+	) {
+		e.preventDefault();
+		navigate(`/search?q=${q}`);
+	}
+	function onLogout(e: SyntheticEvent<HTMLDivElement>) {
+		e.preventDefault();
+		dispatch(logout());
+	}
+
+	useEffect(() => {
+		console.log("Current User: ", currentUser);
+	}, [currentUser]);
 
 	return (
 		<>
 			<Container>
 				<Wrapper>
-					<Search>
+					<Search onSubmit={onSearch}>
 						<Input
 							placeholder="Search"
 							onChange={(e) => setQ(e.target.value)}
 						/>
-						<SearchOutlined onClick={() => navigate(`/search?q=${q}`)} />
+						<SearchOutlined onClick={onSearch} />
 					</Search>
-					{/* TODO: logout button */}
 					{currentUser ? (
 						<User>
-							<VideoCallOutlined onClick={() => setIsOpen(true)} />
-							<Avatar src={currentUser.img} />
+							<VideoCallOutlined onClick={() => setUploadIsOpen(true)} />
+							<Avatar
+								src={currentUser.img}
+								onClick={() => setLogoutIsOpen(!logoutIsOpen)}
+							/>
+							{logoutIsOpen && (
+								<ContextMenu onClick={onLogout}>Sign Out</ContextMenu>
+							)}
 							{currentUser.name}
 						</User>
 					) : (
@@ -59,7 +89,7 @@ export function Navbar(): JSX.Element {
 					)}
 				</Wrapper>
 			</Container>
-			{isOpen && <Upload setIsOpen={setIsOpen} />}
+			{uploadIsOpen && <Upload setIsOpen={setUploadIsOpen} />}
 		</>
 	);
 }
