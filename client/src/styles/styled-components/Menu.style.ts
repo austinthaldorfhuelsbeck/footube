@@ -1,35 +1,20 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
 	flex: 1;
 	background-color: ${({ theme }) => theme.bgLighter};
-	height: 100vh;
+	min-height: 100vh;
 	color: ${({ theme }) => theme.text};
 	font-size: 14px;
 	position: sticky;
-	top: 0;
+	top: 0px;
+	z-index: 1;
+	padding: 16px 32px 18px 20px;
+	box-shadow: ${({ theme }) => theme.boxShadow};
 `;
 
 export const Wrapper = styled.div`
-	padding: 18px 26px;
-`;
-
-export const Header = styled.div`
-	display: flex;
-	gap: 25px;
-	padding: 0 0 25px 5px;
-`;
-
-export const LogoLink = styled(Link)`
-	display: flex;
-	align-items: center;
-	font-weight: bold;
-	gap: 5px;
-`;
-
-export const Img = styled.img`
-	height: 25px;
+	padding-top: 24px;
 `;
 
 export const Item = styled.div`

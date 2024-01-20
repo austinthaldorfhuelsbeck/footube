@@ -5,12 +5,14 @@ export const Container = styled.div`
 	top: 0;
 	height: 56px;
 	background-color: ${({ theme }) => theme.bgLighter};
+	z-index: 1;
+	box-shadow: ${({ theme }) => theme.boxShadow};
 `;
 
 export const Wrapper = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: space-between;
 	height: 100%;
 	padding: 0 20px;
 	position: relative;

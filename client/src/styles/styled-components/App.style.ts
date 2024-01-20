@@ -10,5 +10,6 @@ export const Main = styled.div`
 `;
 
 export const Wrapper = styled.div`
+	min-height: 100vh;
 	padding: 22px 96px;
 `;

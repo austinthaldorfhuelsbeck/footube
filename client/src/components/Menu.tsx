@@ -1,6 +1,7 @@
-import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from "react";
+import React, { SyntheticEvent } from "react";
 
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import HomeIcon from "@mui/icons-material/Home";
 import {
@@ -12,83 +13,78 @@ import {
 	LibraryMusicOutlined,
 	LiveTvOutlined,
 	MovieCreationOutlined,
+	QuestionAnswerOutlined,
 	SettingsOutlined,
 	SportsBasketballOutlined,
 	SportsEsportsOutlined,
 	SubscriptionsOutlined,
 	VideoLibraryOutlined,
-	MenuOutlined,
 } from "@mui/icons-material";
 
-import YouTubeLogo from "../img/logo.png";
+import { RootState } from "../reducers/store";
 import {
 	Button,
 	Container,
-	Header,
-	Img,
 	Item,
 	Login,
-	LogoLink,
 	Title,
 	Wrapper,
 } from "../styles/styled-components/Menu.style";
-import { useSelector } from "react-redux";
-import { RootState } from "../reducers/store";
+import { MenuProps } from "../App";
+import { MenuHeader } from "./MenuHeader";
 
-interface MenuItemProps {
-	icon: ReactNode;
-	title: string;
-	onClick?: () => void;
-}
-interface MenuProps {
-	darkMode: boolean;
-	setDarkMode: Dispatch<SetStateAction<boolean>>;
-}
-
-function MenuItem({ icon, title, onClick }: PropsWithChildren<MenuItemProps>) {
-	return (
-		<Item onClick={onClick}>
-			{icon}
-			{title}
-		</Item>
-	);
-}
-
-export function Menu({
-	darkMode,
-	setDarkMode,
-}: PropsWithChildren<MenuProps>): JSX.Element {
+export const Menu: React.FC<MenuProps> = ({
+	isDarkMode,
+	setIsDarkMode,
+	isMenu,
+	setIsMenu,
+}) => {
+	// get user with redux
 	const { currentUser } = useSelector((state: RootState) => state.user);
-
-	function toggle() {
-		setDarkMode(!darkMode);
-	}
+	// handlers
+	const onThemeClick = (e: SyntheticEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		setIsDarkMode(!isDarkMode);
+	};
+	const onMenuClick = (e: SyntheticEvent<HTMLOrSVGElement>) => {
+		e.preventDefault();
+		setIsMenu(!isMenu);
+	};
 
 	return (
 		<Container>
+			<MenuHeader toggle={onMenuClick} />
 			<Wrapper>
-				<Header>
-					<MenuOutlined />
-					<LogoLink to="/">
-						<Img src={YouTubeLogo} />
-						FooTube
-					</LogoLink>
-				</Header>
 				<Link to="/">
-					<MenuItem icon={<HomeIcon />} title="Home" />
+					<Item>
+						<HomeIcon />
+						Home
+					</Item>
 				</Link>
 				<Link to="/trending">
-					<MenuItem icon={<ExposureOutlined />} title="Explore" />
+					<Item>
+						<ExposureOutlined />
+						Explore
+					</Item>
 				</Link>
 				<Link to="subscriptions">
-					<MenuItem icon={<SubscriptionsOutlined />} title="Subscriptions" />
+					<Item>
+						<SubscriptionsOutlined />
+						Subscriptions
+					</Item>
 				</Link>
 				<hr />
-				<MenuItem icon={<VideoLibraryOutlined />} title="Library" />
-				<MenuItem icon={<HistoryOutlined />} title="History" />
+				<Item>
+					<VideoLibraryOutlined />
+					Library
+				</Item>
+				<Item>
+					<HistoryOutlined />
+					History
+				</Item>
 				<hr />
 				{!currentUser && (
-					<>
+					<Title>
 						<Login>
 							Sign in to like videos, comment, and subscribe.
 							<Link to="signin">
@@ -99,25 +95,51 @@ export function Menu({
 							</Link>
 						</Login>
 						<hr />
-					</>
+					</Title>
 				)}
 				<Title>Best of FooTube</Title>
-				<MenuItem icon={<LibraryMusicOutlined />} title="Music" />
-				<MenuItem icon={<SportsBasketballOutlined />} title="Sports" />
-				<MenuItem icon={<SportsEsportsOutlined />} title="Gaming" />
-				<MenuItem icon={<MovieCreationOutlined />} title="Movies" />
-				<MenuItem icon={<ArticleOutlined />} title="News" />
-				<MenuItem icon={<LiveTvOutlined />} title="Live" />
+				<Item>
+					<LibraryMusicOutlined />
+					Music
+				</Item>
+				<Item>
+					<SportsBasketballOutlined />
+					Sports
+				</Item>
+				<Item>
+					<SportsEsportsOutlined />
+					Gaming
+				</Item>
+				<Item>
+					<MovieCreationOutlined />
+					Movies
+				</Item>
+				<Item>
+					<ArticleOutlined />
+					News
+				</Item>
+				<Item>
+					<LiveTvOutlined />
+					Live
+				</Item>
 				<hr />
-				<MenuItem icon={<SettingsOutlined />} title="Settings" />
-				<MenuItem icon={<FlagOutlined />} title="Report" />
-				<MenuItem icon={<HomeIcon />} title="Help" />
-				<MenuItem
-					icon={<HomeIcon />}
-					title={darkMode ? "Light mode" : "Dark mode"}
-					onClick={toggle}
-				/>
+				<Item>
+					<SettingsOutlined />
+					Settings
+				</Item>
+				<Item>
+					<FlagOutlined />
+					Report
+				</Item>
+				<Item>
+					<QuestionAnswerOutlined />
+					Help
+				</Item>
+				<Item onClick={onThemeClick}>
+					<HomeIcon />
+					{isDarkMode ? "Light mode" : "Dark mode"}
+				</Item>
 			</Wrapper>
 		</Container>
 	);
-}
+};

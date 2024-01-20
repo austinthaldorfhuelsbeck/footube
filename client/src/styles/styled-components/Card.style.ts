@@ -18,6 +18,7 @@ export const Image = styled.img<TypeProps>`
 	background-color: #999;
 	border: none;
 	flex: 1;
+	border-radius: 5px;
 `;
 
 export const Details = styled.div<TypeProps>`

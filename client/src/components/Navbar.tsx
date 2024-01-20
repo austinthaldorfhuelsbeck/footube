@@ -24,8 +24,10 @@ import {
 	User,
 	Wrapper,
 } from "../styles/styled-components/Navbar.style";
+import { NavbarProps } from "../App";
+import { MenuHeader } from "./MenuHeader";
 
-export function Navbar(): JSX.Element {
+export const Navbar: React.FC<NavbarProps> = ({ isMenu, setIsMenu }) => {
 	// react router
 	const navigate = useNavigate();
 
@@ -51,6 +53,10 @@ export function Navbar(): JSX.Element {
 		e.preventDefault();
 		dispatch(logout());
 	}
+	const onMenuClick = (e: SyntheticEvent<HTMLOrSVGElement>) => {
+		e.preventDefault();
+		setIsMenu(!isMenu);
+	};
 
 	useEffect(() => {
 		console.log("Current User: ", currentUser);
@@ -60,6 +66,7 @@ export function Navbar(): JSX.Element {
 		<>
 			<Container>
 				<Wrapper>
+					{isMenu ? <span></span> : <MenuHeader toggle={onMenuClick} />}
 					<Search onSubmit={onSearch}>
 						<Input
 							placeholder="Search"
@@ -92,4 +99,4 @@ export function Navbar(): JSX.Element {
 			{uploadIsOpen && <Upload setIsOpen={setUploadIsOpen} />}
 		</>
 	);
-}
+};

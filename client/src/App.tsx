@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -12,15 +12,38 @@ import { SignIn } from "./components/SignIn";
 import { darkTheme, lightTheme } from "./styles/theme";
 import { Container, Main, Wrapper } from "./styles/styled-components/App.style";
 
+export interface NavbarProps {
+	isMenu: boolean;
+	setIsMenu: Dispatch<SetStateAction<boolean>>;
+}
+export interface MenuProps extends NavbarProps {
+	isDarkMode: boolean;
+	setIsDarkMode: Dispatch<SetStateAction<boolean>>;
+}
+
 export function App(): JSX.Element {
-	const [darkMode, setDarkMode] = useState<boolean>(true);
+	// show/hide state
+	const [isDarkMode, setIsDarkMode] = useState(true);
+	const [isMenu, setIsMenu] = useState(true);
+
+	// build props
+	const menuProps: MenuProps = {
+		isDarkMode,
+		setIsDarkMode,
+		isMenu,
+		setIsMenu,
+	};
+	const navbarProps: NavbarProps = {
+		isMenu,
+		setIsMenu,
+	};
 
 	return (
-		<ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+		<ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
 			<Container>
-				<Menu darkMode={darkMode} setDarkMode={setDarkMode} />
+				{isMenu && <Menu {...menuProps} />}
 				<Main>
-					<Navbar />
+					<Navbar {...navbarProps} />
 					<Wrapper>
 						<Routes>
 							<Route path="/">
