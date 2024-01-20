@@ -57,6 +57,11 @@ export const User = styled.div`
 	gap: 10px;
 	font-weight: 500;
 	color: ${({ theme }) => theme.text};
+	cursor: default;
+	svg,
+	img {
+		cursor: pointer;
+	}
 `;
 
 export const Avatar = styled.img`

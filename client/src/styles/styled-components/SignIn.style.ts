@@ -37,16 +37,6 @@ export const Input = styled.input`
 	color: ${({ theme }) => theme.text};
 `;
 
-export const Button = styled.button`
-	border-radius: 3px;
-	border: none;
-	padding: 10px 20px;
-	cursor: pointer;
-	font-weight: 500;
-	background-color: ${({ theme }) => theme.soft};
-	color: ${({ theme }) => theme.textSoft};
-`;
-
 export const More = styled.div`
 	display: flex;
 	margin-top: 10px;

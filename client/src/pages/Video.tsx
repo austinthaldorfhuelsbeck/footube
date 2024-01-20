@@ -92,7 +92,7 @@ export function Video(): JSX.Element {
 		<Container>
 			{currentVideo && (
 				<Content>
-					<VideoFrame src={currentVideo?.video} />
+					<VideoFrame src={currentVideo?.video} controls />
 					<Title>{currentVideo.title}</Title>
 					<Details>
 						<Info>

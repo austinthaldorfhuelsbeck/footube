@@ -7,7 +7,6 @@ import axios, { AxiosResponse } from "axios";
 import { auth, provider } from "../firebase";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import {
-	Button,
 	Container,
 	Input,
 	Link,
@@ -18,6 +17,7 @@ import {
 	Wrapper,
 } from "../styles/styled-components/SignIn.style";
 import { UserCredential, signInWithPopup } from "firebase/auth";
+import { SubmitButton } from "../styles/util.style";
 
 interface ISignIn {
 	name: string;
@@ -84,9 +84,11 @@ export function SignIn(): JSX.Element {
 					placeholder="password"
 					onChange={onChange}
 				/>
-				<Button onClick={onLogin}>Sign in</Button>
+				<SubmitButton onClick={onLogin}>Sign in</SubmitButton>
 				<Title>or</Title>
-				<Button onClick={signInWithGoogle}>Sign in with Google</Button>
+				<SubmitButton onClick={signInWithGoogle}>
+					Sign in with Google
+				</SubmitButton>
 				<Title>or</Title>
 				<Input name="name" placeholder="username" onChange={onChange} />
 				<Input
@@ -101,7 +103,7 @@ export function SignIn(): JSX.Element {
 					placeholder="password"
 					onChange={onChange}
 				/>
-				<Button>Sign up</Button>
+				<SubmitButton>Sign up</SubmitButton>
 			</Wrapper>
 			<More>
 				English(USA)
