@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import axios, { AxiosResponse } from "axios";
 
 import { auth, provider } from "../firebase";
-import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
+import { loginFailure, loginStart, loginSuccess } from "../reducers/userSlice";
 import {
 	Container,
 	Input,

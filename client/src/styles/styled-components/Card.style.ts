@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface TypeProps {
-	type?: string;
+	type: string;
 }
-export const Container = styled.div<TypeProps>`
+export const Container = styled(Link)<TypeProps>`
 	width: 360px;
 	margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "45px")};
 	cursor: pointer;
@@ -33,8 +34,6 @@ export const ChannelImage = styled.img<TypeProps>`
 	background-color: #999;
 	display: ${(props) => props.type === "sm" && "none"};
 `;
-
-export const TextContainer = styled.div``;
 
 export const Title = styled.h1`
 	font-size: 16px;

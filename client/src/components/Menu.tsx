@@ -17,32 +17,32 @@ import {
 	SportsEsportsOutlined,
 	SubscriptionsOutlined,
 	VideoLibraryOutlined,
+	MenuOutlined,
 } from "@mui/icons-material";
 
 import YouTubeLogo from "../img/logo.png";
-import { Hr } from "../styles/util.style";
 import {
 	Button,
 	Container,
+	Header,
 	Img,
 	Item,
 	Login,
-	Logo,
+	LogoLink,
 	Title,
 	Wrapper,
 } from "../styles/styled-components/Menu.style";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-
-interface MenuProps {
-	darkMode: boolean;
-	setDarkMode: Dispatch<SetStateAction<boolean>>;
-}
+import { RootState } from "../reducers/store";
 
 interface MenuItemProps {
 	icon: ReactNode;
 	title: string;
 	onClick?: () => void;
+}
+interface MenuProps {
+	darkMode: boolean;
+	setDarkMode: Dispatch<SetStateAction<boolean>>;
 }
 
 function MenuItem({ icon, title, onClick }: PropsWithChildren<MenuItemProps>) {
@@ -67,12 +67,13 @@ export function Menu({
 	return (
 		<Container>
 			<Wrapper>
-				<Link to="/">
-					<Logo>
+				<Header>
+					<MenuOutlined />
+					<LogoLink to="/">
 						<Img src={YouTubeLogo} />
 						FooTube
-					</Logo>
-				</Link>
+					</LogoLink>
+				</Header>
 				<Link to="/">
 					<MenuItem icon={<HomeIcon />} title="Home" />
 				</Link>
@@ -82,10 +83,10 @@ export function Menu({
 				<Link to="subscriptions">
 					<MenuItem icon={<SubscriptionsOutlined />} title="Subscriptions" />
 				</Link>
-				<Hr />
+				<hr />
 				<MenuItem icon={<VideoLibraryOutlined />} title="Library" />
 				<MenuItem icon={<HistoryOutlined />} title="History" />
-				<Hr />
+				<hr />
 				{!currentUser && (
 					<>
 						<Login>
@@ -97,7 +98,7 @@ export function Menu({
 								</Button>
 							</Link>
 						</Login>
-						<Hr />
+						<hr />
 					</>
 				)}
 				<Title>Best of FooTube</Title>
@@ -107,7 +108,7 @@ export function Menu({
 				<MenuItem icon={<MovieCreationOutlined />} title="Movies" />
 				<MenuItem icon={<ArticleOutlined />} title="News" />
 				<MenuItem icon={<LiveTvOutlined />} title="Live" />
-				<Hr />
+				<hr />
 				<MenuItem icon={<SettingsOutlined />} title="Settings" />
 				<MenuItem icon={<FlagOutlined />} title="Report" />
 				<MenuItem icon={<HomeIcon />} title="Help" />

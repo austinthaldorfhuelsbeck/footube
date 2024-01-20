@@ -12,8 +12,8 @@ import {
 } from "@mui/icons-material";
 
 import { Upload } from "./Upload";
-import { RootState } from "../redux/store";
-import { logout } from "../redux/userSlice";
+import { RootState } from "../reducers/store";
+import { logout } from "../reducers/userSlice";
 import {
 	Avatar,
 	Button,

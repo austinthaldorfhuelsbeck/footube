@@ -1,10 +1,9 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import React from "react";
 
 import { format } from "timeago.js";
-import { Link } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
 
-import { IUser, IVideo } from "../interfaces/models";
+import { useChannel } from "../hooks/hooks";
+import { IVideo } from "../interfaces/models";
 import {
 	ChannelImage,
 	ChannelName,
@@ -12,43 +11,34 @@ import {
 	Details,
 	Image,
 	Info,
-	TextContainer,
 	Title,
 } from "../styles/styled-components/Card.style";
+import { ErrorAlert } from "./ErrorAlert";
 
-interface ComponentProps {
-	type?: string;
+// Types
+interface CardProps {
+	type: string;
 	video: IVideo;
 }
 
-export function Card({
-	type,
-	video,
-}: PropsWithChildren<ComponentProps>): JSX.Element {
-	const [user, setUser] = useState<IUser | undefined>();
-
-	useEffect(() => {
-		async function fetchUser() {
-			// TODO error handling
-			const res: AxiosResponse = await axios.get(`/api/users/${video.userId}`);
-			if (res.data) setUser(res.data);
-		}
-		fetchUser();
-	}, [video.userId]);
-
+// Card displaying a preview of a video
+export const Card: React.FC<CardProps> = ({ type, video }) => {
+	// get channel with hook
+	const { channel, err } = useChannel(video.userId);
+	// type prop specifies lg or sm preview
+	// add channel details when channel loads from db
 	return (
-		<Link to={`/video/${video._id}`} style={{ textDecoration: "none" }}>
-			<Container type={type}>
-				<Image src={video.img} type={type} />
-				<Details type={type}>
-					<ChannelImage type={type} src={user?.img} />
-					<TextContainer>
-						<Title>{video.title}</Title>
-						<ChannelName>{user?.name}</ChannelName>
-						<Info>{`${video.views} views • ${format(video.createdAt)}`}</Info>
-					</TextContainer>
-				</Details>
-			</Container>
-		</Link>
+		<Container type={type} to={`/video/${video._id}`}>
+			<Image src={video.img} type={type} />
+			<Details type={type}>
+				{channel && <ChannelImage type={type} src={channel.img} />}
+				<>
+					<Title>{video.title}</Title>
+					{channel && <ChannelName>{channel.name}</ChannelName>}
+					<Info>{`${video.views} views • ${format(video.createdAt)}`}</Info>
+				</>
+			</Details>
+			<ErrorAlert err={err} />
+		</Container>
 	);
-}
+};

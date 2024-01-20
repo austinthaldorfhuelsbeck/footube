@@ -3,9 +3,9 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
-import { Home } from "./pages/Home";
-import { Video } from "./pages/Video";
-import { Search } from "./pages/Search";
+import { Home } from "./views/Home";
+import { Video } from "./views/Video";
+import { Search } from "./views/Search";
 import { Menu } from "./components/Menu";
 import { Navbar } from "./components/Navbar";
 import { SignIn } from "./components/SignIn";

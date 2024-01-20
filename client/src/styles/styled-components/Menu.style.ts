@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -14,12 +15,17 @@ export const Wrapper = styled.div`
 	padding: 18px 26px;
 `;
 
-export const Logo = styled.div`
+export const Header = styled.div`
+	display: flex;
+	gap: 25px;
+	padding: 0 0 25px 5px;
+`;
+
+export const LogoLink = styled(Link)`
 	display: flex;
 	align-items: center;
-	gap: 5px;
 	font-weight: bold;
-	margin-bottom: 25px;
+	gap: 5px;
 `;
 
 export const Img = styled.img`

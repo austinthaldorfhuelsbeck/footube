@@ -17,12 +17,12 @@ import {
 } from "@mui/icons-material";
 
 import { Card } from "../components/Card";
-import { RootState } from "../redux/store";
+import { RootState } from "../reducers/store";
 import { IUser } from "../interfaces/models";
-import { subscribe } from "../redux/userSlice";
+import { subscribe } from "../reducers/userSlice";
 import { Comments } from "../components/Comments";
-import { CircleImg, Hr } from "../styles/util.style";
-import { dislike, fetchSuccess, like } from "../redux/videoSlice";
+import { CircleImg } from "../styles/util.style";
+import { dislike, fetchSuccess, like } from "../reducers/videoSlice";
 import {
 	Button,
 	Buttons,
@@ -124,7 +124,7 @@ export function Video(): JSX.Element {
 							</Button>
 						</Buttons>
 					</Details>
-					<Hr />
+					<hr />
 					{channel && (
 						<Channel>
 							<ChannelInfo>
@@ -142,7 +142,7 @@ export function Video(): JSX.Element {
 							</Subscribe>
 						</Channel>
 					)}
-					<Hr />
+					<hr />
 					<Comments videoId={currentVideo._id} />
 				</Content>
 			)}

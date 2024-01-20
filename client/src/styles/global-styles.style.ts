@@ -28,8 +28,10 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
     }
 
-    iframe {
-        border: none;
+    hr {
+        margin: 15px 0px;
+        border-top: 0.5px solid #aaaaaaa7;
+        border-bottom: none;
     }
 
     img {

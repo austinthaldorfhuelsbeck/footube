@@ -1,47 +1,93 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import {
-	Container,
-	Input,
-	NewComment,
-} from "../styles/styled-components/Comments.style";
-import { CircleImg } from "../styles/util.style";
-import { Comment } from "./Comment";
-import { IComment } from "../interfaces/models";
-import axios, { AxiosResponse } from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import React from "react";
 
-interface ComponentProps {
+import { format } from "timeago.js";
+import { useSelector } from "react-redux";
+
+import { ErrorAlert } from "./ErrorAlert";
+import { RootState } from "../reducers/store";
+import { IComment } from "../interfaces/models";
+import { CircleImg } from "../styles/util.style";
+import { useChannel, useComment, useComments } from "../hooks/hooks";
+import {
+	Button,
+	Date,
+	Details,
+	Form,
+	Name,
+	NewComment,
+	Text,
+	TextArea,
+} from "../styles/styled-components/Comments.style";
+
+// Types
+interface CommentProps {
+	comment: IComment;
+}
+interface VideoProps {
 	videoId: string;
 }
 
-export function Comments({
-	videoId,
-}: PropsWithChildren<ComponentProps>): JSX.Element {
-	// redux
+// New comment form component
+const CommentForm: React.FC<VideoProps> = ({ videoId }) => {
+	// get user with redux
 	const { currentUser } = useSelector((state: RootState) => state.user);
-
-	// state for loading comments
-	const [comments, setComments] = useState<(IComment | undefined)[]>([]);
-
-	// fetch comments on page load
-	useEffect(() => {
-		async function fetchComments() {
-			const res: AxiosResponse = await axios.get(`/api/comments/${videoId}`);
-			if (res.data) setComments(res.data);
-		}
-		fetchComments();
-	}, [videoId]);
+	// get form functionality with hook
+	const { desc, onChange, onSubmit, onCancel, err } = useComment(videoId);
 
 	return (
-		<Container>
+		currentUser && (
 			<NewComment>
-				<CircleImg src={currentUser?.img} />
-				<Input placeholder="Add a comment..." />
+				<CircleImg src={currentUser.img} />
+				<Form onSubmit={onSubmit}>
+					<TextArea
+						placeholder="Add a comment..."
+						onChange={onChange}
+						value={desc}
+					/>
+					{desc && (
+						<>
+							<Button onClick={onCancel}>Cancel</Button>
+							<Button type="submit">Comment</Button>
+						</>
+					)}
+				</Form>
+				<ErrorAlert err={err} />
 			</NewComment>
-			{comments?.map(
+		)
+	);
+};
+
+// Single comment component
+const Comment: React.FC<CommentProps> = ({ comment }) => {
+	// get channel with hook
+	const { channel, err } = useChannel(comment.userId);
+	// add channel details when channel loads from db
+	return (
+		<>
+			{channel && <CircleImg src={channel.img} />}
+			<Details>
+				{channel && <Name>{channel.name}</Name>}
+				<Date>{format(comment.createdAt)}</Date>
+				<Text>{comment.desc}</Text>
+			</Details>
+			<ErrorAlert err={err} />
+		</>
+	);
+};
+
+// Comments array component
+export const Comments: React.FC<VideoProps> = ({ videoId }) => {
+	// get comments with hook
+	const { comments, err } = useComments(videoId);
+
+	// display new comment form and map comments from db
+	return (
+		<>
+			<CommentForm videoId={videoId} />
+			{comments.map(
 				(comment) => comment && <Comment key={comment._id} comment={comment} />,
 			)}
-		</Container>
+			<ErrorAlert err={err} />
+		</>
 	);
-}
+};

@@ -22,7 +22,7 @@ export function Search() {
 		<Container>
 			{videos.map(
 				(video: IVideo | undefined) =>
-					video && <Card key={video._id} video={video} />,
+					video && <Card type="lg" key={video._id} video={video} />,
 			)}
 		</Container>
 	);
