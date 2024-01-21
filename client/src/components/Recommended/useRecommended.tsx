@@ -21,11 +21,11 @@ export const useRecommended = (
 
 	// load videos matching tags
 	useEffect(() => {
-		async function load() {
+		const load = async () => {
 			const res: IApiResponse = await fetchVideos(undefined, tags);
 			if (res.data) setVideos(res.data);
 			if (res.error) setErr(res.error);
-		}
+		};
 		load();
 	}, [tags]);
 

@@ -39,33 +39,33 @@ export const useVideo = (): UseVideo => {
 	const [channel, setChannel] = useState<IUser | undefined>();
 
 	// handlers
-	async function onLike() {
+	const onLike = async () => {
 		if (currentVideo) await likeVideo(currentVideo._id);
 		if (currentUser) dispatch(like(currentUser._id));
-	}
-	async function onDislike() {
+	};
+	const onDislike = async () => {
 		if (currentVideo) await dislikeVideo(currentVideo._id);
 		if (currentUser) dispatch(dislike(currentUser._id));
-	}
-	async function onSub() {
+	};
+	const onSub = async () => {
 		if (channel?._id) {
 			currentUser?.subscribedUsers.includes(channel._id)
 				? await unsubscribeChannel(channel._id)
 				: await subscribeChannel(channel._id);
 			dispatch(subscribe(channel._id));
 		}
-	}
+	};
 
 	// fetch video and user on page load
 	useEffect(() => {
-		async function fetchData() {
+		const fetchData = async () => {
 			const videoRes: IApiResponse = await fetchVideo(id);
 			if (videoRes.data) {
 				dispatch(fetchSuccess(videoRes.data));
 				const userRes: IApiResponse = await fetchUser(videoRes.data.userId);
 				if (userRes.data) setChannel(userRes.data);
 			}
-		}
+		};
 		fetchData();
 	}, [dispatch, id]);
 

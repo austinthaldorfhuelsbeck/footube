@@ -61,29 +61,29 @@ export const useUpload = (): UseUpload => {
 	const [err, setErr] = useState<IAppError | StorageError | undefined>();
 
 	// handlers
-	function onVideoChange(e: ChangeEvent<HTMLInputElement>) {
+	const onVideoChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target?.files) setVideo(e.target.files[0]);
-	}
-	function onImgChange(e: ChangeEvent<HTMLInputElement>) {
+	};
+	const onImgChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target?.files) setImg(e.target.files[0]);
-	}
-	function onTextChange(
+	};
+	const onTextChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-	) {
+	) => {
 		setInputs((prev) => {
 			const { name, value } = e.target;
 			return { ...prev, [name]: value };
 		});
-	}
-	function onTagsChange(e: ChangeEvent<HTMLInputElement>) {
+	};
+	const onTagsChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setTags(e.target.value.split(","));
-	}
-	async function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
+	};
+	const onSubmit = async (e: SyntheticEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		const res: IApiResponse = await postVideo({ ...inputs, tags });
 		if (res.error) setErr(res.error);
 		if (res.data) navigate(`/video/${res.data._id}`);
-	}
+	};
 
 	// whenever file input changes, begin uploading file to firebase
 	useEffect(() => {

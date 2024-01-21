@@ -15,11 +15,11 @@ export const useComments = (videoId: string): UseComments => {
 	const [comments, setComments] = useState<(IComment | undefined)[]>([]);
 	const [err, setErr] = useState<IAppError | undefined>();
 	useEffect(() => {
-		async function load() {
+		const load = async () => {
 			const res: IApiResponse = await fetchComments(videoId);
 			if (res.data) setComments(res.data);
 			if (res.error) setErr(res.error);
-		}
+		};
 		load();
 	}, [videoId]);
 
