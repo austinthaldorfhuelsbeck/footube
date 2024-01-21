@@ -3,9 +3,11 @@ import React, { SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
-
-
+import { MenuItem } from "./MenuItem";
+import { menuItems } from "./menu-items";
 import { Header } from "../Header/Header";
 import { NavbarProps } from "../Navbar/Navbar";
 import { RootState } from "../../../reducers/store";
@@ -24,41 +26,14 @@ export const Menu: React.FC<MenuProps> = ({
 	// get user with redux
 	const { currentUser } = useSelector((state: RootState) => state.user);
 
+	// break apart the menu-items object with slice
 	return (
 		<Container>
 			<Header toggle={toggleMenu} />
 			<Wrapper>
-				<Link to="/">
-					<Item>
-						<HomeIcon />
-						Home
-					</Item>
-				</Link>
-				<Link to="/trending">
-					<Item>
-						<ExposureOutlined />
-						Explore
-					</Item>
-				</Link>
-				<Link to="/subscriptions">
-					<Item>
-						<SubscriptionsOutlined />
-						Subscriptions
-					</Item>
-				</Link>
-				<hr />
-				<Link to="/library">
-					<Item>
-						<VideoLibraryOutlined />
-						Library
-					</Item>
-				</Link>
-				<Link to="/history">
-					<Item>
-						<HistoryOutlined />
-						History
-					</Item>
-				</Link>
+				{menuItems.slice(0, 5).map((item) => (
+					<MenuItem {...item} />
+				))}
 				<hr />
 				{!currentUser && (
 					<>
@@ -66,7 +41,7 @@ export const Menu: React.FC<MenuProps> = ({
 							Sign in to like videos, comment, and subscribe.
 							<Link to="/sign-in">
 								<Button>
-									<AccountCircleOutlined />
+									<FontAwesomeIcon icon={faUserPlus} />
 									Sign in
 								</Button>
 							</Link>
@@ -75,63 +50,15 @@ export const Menu: React.FC<MenuProps> = ({
 					</>
 				)}
 				<Title>Best of FooTube</Title>
-				<Link to="/explore/music">
-					<Item>
-						<LibraryMusicOutlined />
-						Music
-					</Item>
-				</Link>
-				<Link to="/explore/sports">
-					<Item>
-						<SportsBasketballOutlined />
-						Sports
-					</Item>
-				</Link>
-				<Link to="/explore/gaming">
-					<Item>
-						<SportsEsportsOutlined />
-						Gaming
-					</Item>
-				</Link>
-				<Link to="/explore/movies">
-					<Item>
-						<MovieCreationOutlined />
-						Movies
-					</Item>
-				</Link>
-				<Link to="/explore/news">
-					<Item>
-						<ArticleOutlined />
-						News
-					</Item>
-				</Link>
-				<Link to="/live">
-					<Item>
-						<LiveTvOutlined />
-						Live
-					</Item>
-				</Link>
+				{menuItems.slice(5, 11).map((item) => (
+					<MenuItem {...item} />
+				))}
 				<hr />
-				<Link to="/settings">
-					<Item>
-						<SettingsOutlined />
-						Settings
-					</Item>
-				</Link>
-				<Link to="/report">
-					<Item>
-						<FlagOutlined />
-						Report
-					</Item>
-				</Link>
-				<Link to="/help">
-					<Item>
-						<QuestionAnswerOutlined />
-						Help
-					</Item>
-				</Link>
+				{menuItems.slice(11).map((item) => (
+					<MenuItem {...item} />
+				))}
 				<Item onClick={toggleTheme}>
-					<HomeIcon />
+					<FontAwesomeIcon icon={faHome} />
 					{isDarkMode ? "Light mode" : "Dark mode"}
 				</Item>
 			</Wrapper>

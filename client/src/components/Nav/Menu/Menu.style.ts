@@ -23,6 +23,7 @@ export const Item = styled.div`
 	gap: 20px;
 	cursor: pointer;
 	padding: 7.5px 5px;
+	margin: 5px 0;
 	border-radius: 5px;
 
 	&:hover {

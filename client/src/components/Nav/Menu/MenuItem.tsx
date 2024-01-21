@@ -1,22 +1,22 @@
-import React, { ReactElement } from "react";
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Link } from "react-router-dom";
 
-import { SvgIconProps } from "@mui/material";
-
 import { Item } from "./Menu.style";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 export interface IMenuItem {
 	target: string;
 	title: string;
-	icon: (props: SvgIconProps) => JSX.Element;
+	icon: IconDefinition;
 }
 
 export const MenuItem: React.FC<IMenuItem> = ({ target, title, icon }) => {
 	return (
 		<Link to={target}>
 			<Item>
-				{icon}
+				<FontAwesomeIcon icon={icon} />
 				{title}
 			</Item>
 		</Link>
