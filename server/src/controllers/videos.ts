@@ -117,9 +117,7 @@ export async function listSub(req: Request, res: Response, next: NextFunction) {
 			: subs;
 		// flatten, sort, return
 		if (users)
-			res
-				.status(200)
-				.json(users.flat().sort((a, b) => b.createdAt - a.createdAt));
+			res.status(200).json(users.flat());
 	} catch (err) {
 		next(err);
 	}
