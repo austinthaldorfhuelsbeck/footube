@@ -1,10 +1,6 @@
-import { useEffect, useState } from "react";
+import React from "react";
 
-import { Dispatch } from "redux";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import axios, { AxiosResponse } from "axios";
-import { useLocation } from "react-router-dom";
 
 import {
 	AddTaskOutlined,
@@ -15,17 +11,17 @@ import {
 	ThumbUpOutlined,
 } from "@mui/icons-material";
 
-import { Card } from "../../components/Card/Card";
-import { RootState } from "../../reducers/store";
+import { useVideo } from "./useVideo";
+import { timeago } from "../../utils/timeago";
 import { IUser } from "../../interfaces/models";
-import { subscribe } from "../../reducers/userSlice";
-import { Comments } from "../../components/Comments/Comments";
+import { RootState } from "../../reducers/store";
 import { CircleImg } from "../../styles/util.style";
-import { dislike, fetchSuccess, like } from "../../reducers/videoSlice";
+import { Comments } from "../../components/Comments/Comments";
+import { Recommended } from "../../components/Recommended/Recommended";
 import {
 	Button,
 	Buttons,
-	Channel,
+	ChannelContainer,
 	ChannelDetail,
 	ChannelInfo,
 	ChannelName,
@@ -39,53 +35,43 @@ import {
 	Title,
 	VideoFrame,
 } from "./Video.style";
-import { Recommended } from "../../components/Recommended/Recommended";
-import { timeago } from "../../utils/timeago";
 
-export function Video(): JSX.Element {
+interface ChannelProps {
+	channel: IUser;
+	onSub: () => void;
+}
+
+const Channel: React.FC<ChannelProps> = ({ channel, onSub }) => {
 	// Redux
 	const { currentUser } = useSelector((state: RootState) => state.user);
 	const { currentVideo } = useSelector((state: RootState) => state.video);
-	const dispatch: Dispatch = useDispatch();
 
-	// find video id from path
-	const id: string = useLocation().pathname.split("/")[2];
+	return (
+		<ChannelContainer>
+			<ChannelInfo>
+				<CircleImg src={channel.img} />
+				<ChannelDetail>
+					<ChannelName>{channel.name}</ChannelName>
+					<Counter>{channel.subscribers}</Counter>
+					<Description>{currentVideo?.desc}</Description>
+				</ChannelDetail>
+			</ChannelInfo>
+			<Subscribe onClick={onSub}>
+				{currentUser?.subscribedUsers?.includes(channel._id)
+					? "Subscribed"
+					: "Subscribe"}
+			</Subscribe>
+		</ChannelContainer>
+	);
+};
 
-	// state for loading the channel that posted the video
-	const [channel, setChannel] = useState<IUser | undefined>();
+export const Video: React.FC = () => {
+	// Redux
+	const { currentUser } = useSelector((state: RootState) => state.user);
+	const { currentVideo } = useSelector((state: RootState) => state.video);
 
-	// handlers
-	async function onLike() {
-		await axios.put(`/api/users/like/${currentVideo?._id}`);
-		dispatch(like(currentUser?._id));
-	}
-	async function onDislike() {
-		await axios.put(`/api/users/dislike/${currentVideo?._id}`);
-		dispatch(dislike(currentUser?._id));
-	}
-	async function onSub() {
-		if (channel?._id) {
-			currentUser?.subscribedUsers.includes(channel._id)
-				? await axios.put(`/api/users/unsub/${channel._id}`)
-				: await axios.put(`/api/users/sub/${channel._id}`);
-			dispatch(subscribe(channel._id));
-		}
-	}
-
-	// fetch video and user on page load
-	useEffect(() => {
-		async function fetchData() {
-			const videoRes: AxiosResponse = await axios.get(`/api/videos/${id}`);
-			if (videoRes.data) {
-				dispatch(fetchSuccess(videoRes.data));
-				const userRes: AxiosResponse = await axios.get(
-					`/api/users/${videoRes.data.userId}`,
-				);
-				if (userRes.data) setChannel(userRes.data);
-			}
-		}
-		fetchData();
-	}, [dispatch, id]);
+	// custom hook
+	const { onLike, onDislike, onSub, channel } = useVideo();
 
 	return (
 		<Container>
@@ -124,23 +110,7 @@ export function Video(): JSX.Element {
 						</Buttons>
 					</Details>
 					<hr />
-					{channel && (
-						<Channel>
-							<ChannelInfo>
-								<CircleImg src={channel.img} />
-								<ChannelDetail>
-									<ChannelName>{channel.name}</ChannelName>
-									<Counter>{channel.subscribers}</Counter>
-									<Description>{currentVideo.desc}</Description>
-								</ChannelDetail>
-							</ChannelInfo>
-							<Subscribe onClick={onSub}>
-								{currentUser?.subscribedUsers?.includes(channel._id)
-									? "Subscribed"
-									: "Subscribe"}
-							</Subscribe>
-						</Channel>
-					)}
+					{channel && <Channel channel={channel} onSub={onSub} />}
 					<hr />
 					<Comments videoId={currentVideo._id} />
 				</Content>
@@ -150,4 +120,4 @@ export function Video(): JSX.Element {
 			)}
 		</Container>
 	);
-}
+};

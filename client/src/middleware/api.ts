@@ -47,6 +47,14 @@ export const fetchVideos = async (
 	return (await callExternalApi(config)) as IApiResponse;
 };
 
+export const fetchVideo = async (id: string): Promise<IApiResponse> => {
+	const config: AxiosRequestConfig = {
+		url: `/api/videos/${id}`,
+		method: "GET",
+	};
+	return (await callExternalApi(config)) as IApiResponse;
+};
+
 export const login = async (
 	cred: Partial<IUser> | UserCredential,
 ): Promise<IApiResponse> => {
@@ -75,6 +83,38 @@ export const postVideo = async (
 		url: "/api/videos",
 		method: "POST",
 		data: video,
+	};
+	return (await callExternalApi(config)) as IApiResponse;
+};
+
+export const likeVideo = async (id: string): Promise<IApiResponse> => {
+	const config: AxiosRequestConfig = {
+		url: `/api/users/like/${id}`,
+		method: "PUT",
+	};
+	return (await callExternalApi(config)) as IApiResponse;
+};
+
+export const dislikeVideo = async (id: string): Promise<IApiResponse> => {
+	const config: AxiosRequestConfig = {
+		url: `/api/users/dislike/${id}`,
+		method: "PUT",
+	};
+	return (await callExternalApi(config)) as IApiResponse;
+};
+
+export const subscribeChannel = async (id: string): Promise<IApiResponse> => {
+	const config: AxiosRequestConfig = {
+		url: `/api/users/sub/${id}`,
+		method: "PUT",
+	};
+	return (await callExternalApi(config)) as IApiResponse;
+};
+
+export const unsubscribeChannel = async (id: string): Promise<IApiResponse> => {
+	const config: AxiosRequestConfig = {
+		url: `/api/users/unsub/${id}`,
+		method: "PUT",
 	};
 	return (await callExternalApi(config)) as IApiResponse;
 };

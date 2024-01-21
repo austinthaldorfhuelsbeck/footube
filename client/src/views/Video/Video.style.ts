@@ -50,7 +50,7 @@ export const Button = styled.button`
 	color: ${({ theme }) => theme.text};
 `;
 
-export const Channel = styled.div`
+export const ChannelContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 `;
