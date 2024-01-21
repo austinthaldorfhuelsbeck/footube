@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "src/index.ts",
 	"scripts": {
-		"build": "tsc -p src/index.ts",
+		"build": "tsc -p src/index.ts && npm install",
 		"start": "node src/index.js",
 		"dev": "ts-node-dev --respawn --pretty --transpile-only ."
 	},
