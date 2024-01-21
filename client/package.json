@@ -40,7 +40,7 @@
 		"@types/redux-thunk": "^2.1.0",
 		"@types/styled-components": "^5.1.34"
 	},
-	"proxy": "http://localhost:8800",
+	"proxy": "https://youtube-clone-flax-one.vercel.app",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
