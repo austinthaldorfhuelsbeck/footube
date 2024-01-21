@@ -1,6 +1,6 @@
 import { IUser } from "../interfaces/models.interface";
 
-interface MongoUser {
+export interface MongoUser extends IUser {
 	_doc: IUser;
 }
 export function removePassword(user: MongoUser) {

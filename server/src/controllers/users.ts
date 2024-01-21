@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../db/models/User";
-import { removePassword } from "../utils/passwords";
+import { MongoUser, removePassword } from "../utils/passwords";
 import { Video } from "../db/models/Video";
 
 export async function update(req: Request, res: Response, next: NextFunction) {
@@ -12,14 +12,15 @@ export async function update(req: Request, res: Response, next: NextFunction) {
 				message: "You are not authorized to update this user.",
 			});
 		// update on db and return
-		const updatedUser = await User.findByIdAndUpdate(
+		const user: MongoUser | null = await User.findByIdAndUpdate(
 			req.params.id,
 			{
 				$set: req.body,
 			},
 			{ new: true },
 		);
-		res.status(200).json(removePassword(updatedUser));
+		if (!user) return next({ status: 404, message: "User not updated." });
+		res.status(200).json(removePassword(user));
 	} catch (err) {
 		next(err);
 	}

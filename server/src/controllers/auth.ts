@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { genSalt, hash, compare } from "bcrypt";
 import { User } from "../db/models/User";
-import { removePassword } from "../utils/passwords";
+import { MongoUser, removePassword } from "../utils/passwords";
 import { IUser } from "../interfaces/models.interface";
 
 // Controller Functions
@@ -31,7 +31,7 @@ export async function signin(req: Request, res: Response, next: NextFunction) {
 	const JWT: string = process.env.JWT || "";
 	try {
 		// find provided user or return error
-		const user: IUser | null = await User.findOne({ name: req.body.name });
+		const user: MongoUser | null = await User.findOne({ name: req.body.name });
 		if (!user) return next({ status: 404, message: "User not found." });
 		// check password and return user or error
 		const isCorrect: boolean = (await compare(
