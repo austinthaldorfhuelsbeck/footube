@@ -7,7 +7,7 @@ export interface IUser extends ITimestamps {
 	_id: string;
 	name: string;
 	email: string;
-	password: string;
+	password?: string;
 	img?: string;
 	subscribers: number;
 	subscribedUsers: (string | undefined)[];
