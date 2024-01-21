@@ -6,7 +6,6 @@ import { ThemeProvider } from "styled-components";
 import { useApp } from "./hooks/useApp";
 import { Home } from "./views/Home/Home";
 import { Video } from "./views/Video/Video";
-import { Search } from "./views/Search/Search";
 import { Signin } from "./components/Signin/Signin";
 import { darkTheme, lightTheme } from "./styles/theme";
 import { Container, Main, Wrapper } from "./App.style";
@@ -42,7 +41,7 @@ export const App: React.FC = () => {
 								<Route index element={<Home type="random" />} />
 								<Route path="trending" element={<Home type="trend" />} />
 								<Route path="subscriptions" element={<Home type="sub" />} />
-								<Route path="search" element={<Search />} />
+								<Route path="search" element={<Home />} />
 								<Route path="sign-in" element={<Signin />} />
 								<Route path="video">
 									<Route path=":id" element={<Video />} />

@@ -30,10 +30,14 @@ export const Card: React.FC<CardProps> = ({ type, video }) => {
 		<Container type={type} to={`/video/${video._id}`}>
 			<Image src={video.img} type={type} />
 			<Details type={type}>
-				{channel && <ChannelImage type={type} src={channel.img} />}
 				<>
 					<Title>{video.title}</Title>
-					{channel && <ChannelName>{channel.name}</ChannelName>}
+					{channel && (
+						<>
+							<ChannelImage type={type} src={channel.img} />
+							<ChannelName>{channel.name}</ChannelName>
+						</>
+					)}
 					<Info>{`${video.views} views • ${timeago(video.createdAt)}`}</Info>
 				</>
 			</Details>

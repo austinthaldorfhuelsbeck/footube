@@ -35,12 +35,15 @@ export const postComment = async (
 export const fetchVideos = async (
 	type?: string,
 	tags?: (string | undefined)[],
+	query?: string,
 ): Promise<IApiResponse> => {
 	const config: AxiosRequestConfig = {
 		method: "GET",
 	};
-	// can either fetch by type or tags
-	config.url = type ? `/api/videos/${type}` : `/api/videos/tags?tags=${tags}`;
+	// can fetch by type, tags, or query
+	if (type) config.url = `/api/videos/${type}`;
+	if (tags) config.url = `/api/videos/tags?tags=${tags}`;
+	if (query) config.url = `/api/videos/search${query}`;
 	return (await callExternalApi(config)) as IApiResponse;
 };
 
