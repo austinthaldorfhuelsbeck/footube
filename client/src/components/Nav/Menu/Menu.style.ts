@@ -30,8 +30,6 @@ export const Item = styled.div`
 	}
 `;
 
-export const Login = styled.div``;
-
 export const Button = styled.button`
 	padding: 5px 15px;
 	background-color: transparent;

@@ -6,7 +6,7 @@ export const CircleImg = styled.img`
 	border-radius: 50%;
 `;
 
-export const SubmitButton = styled.button`
+export const InlineButton = styled.button`
 	border-radius: 3px;
 	border: none;
 	padding: 10px 20px;

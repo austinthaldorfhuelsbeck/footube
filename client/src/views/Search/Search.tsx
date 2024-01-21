@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Container } from "../styles/styled-components/Search.style";
+import { Container } from "./Search.style";
 import axios, { AxiosResponse } from "axios";
-import { IVideo } from "../interfaces/models";
+import { IVideo } from "../../interfaces/models";
 import { useLocation } from "react-router-dom";
-import { Card } from "../components/Card";
+import { Card } from "../../components/Card/Card";
 
 export function Search() {
 	const [videos, setVideos] = useState<(IVideo | undefined)[]>([]);

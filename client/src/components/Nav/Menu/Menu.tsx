@@ -21,39 +21,27 @@ import {
 	VideoLibraryOutlined,
 } from "@mui/icons-material";
 
-import { RootState } from "../reducers/store";
-import {
-	Button,
-	Container,
-	Item,
-	Login,
-	Title,
-	Wrapper,
-} from "../styles/styled-components/Menu.style";
-import { MenuProps } from "../App";
-import { MenuHeader } from "./MenuHeader";
+import { Header } from "../Header/Header";
+import { NavbarProps } from "../Navbar/Navbar";
+import { RootState } from "../../../reducers/store";
+import { Button, Container, Item, Title, Wrapper } from "./Menu.style";
+
+export interface MenuProps extends NavbarProps {
+	isDarkMode: boolean;
+	toggleTheme: (e: SyntheticEvent<HTMLDivElement>) => void;
+}
 
 export const Menu: React.FC<MenuProps> = ({
 	isDarkMode,
-	setIsDarkMode,
-	isMenu,
-	setIsMenu,
+	toggleTheme,
+	toggleMenu,
 }) => {
 	// get user with redux
 	const { currentUser } = useSelector((state: RootState) => state.user);
-	// handlers
-	const onThemeClick = (e: SyntheticEvent<HTMLDivElement>) => {
-		e.preventDefault();
-		setIsDarkMode(!isDarkMode);
-	};
-	const onMenuClick = (e: SyntheticEvent<HTMLOrSVGElement>) => {
-		e.preventDefault();
-		setIsMenu(!isMenu);
-	};
 
 	return (
 		<Container>
-			<MenuHeader toggle={onMenuClick} />
+			<Header toggle={toggleMenu} />
 			<Wrapper>
 				<Link to="/">
 					<Item>
@@ -67,7 +55,7 @@ export const Menu: React.FC<MenuProps> = ({
 						Explore
 					</Item>
 				</Link>
-				<Link to="subscriptions">
+				<Link to="/subscriptions">
 					<Item>
 						<SubscriptionsOutlined />
 						Subscriptions
@@ -84,18 +72,18 @@ export const Menu: React.FC<MenuProps> = ({
 				</Item>
 				<hr />
 				{!currentUser && (
-					<Title>
-						<Login>
+					<>
+						<Title>
 							Sign in to like videos, comment, and subscribe.
-							<Link to="signin">
+							<Link to="/sign-in">
 								<Button>
 									<AccountCircleOutlined />
 									Sign in
 								</Button>
 							</Link>
-						</Login>
+						</Title>
 						<hr />
-					</Title>
+					</>
 				)}
 				<Title>Best of FooTube</Title>
 				<Item>
@@ -135,7 +123,7 @@ export const Menu: React.FC<MenuProps> = ({
 					<QuestionAnswerOutlined />
 					Help
 				</Item>
-				<Item onClick={onThemeClick}>
+				<Item onClick={toggleTheme}>
 					<HomeIcon />
 					{isDarkMode ? "Light mode" : "Dark mode"}
 				</Item>

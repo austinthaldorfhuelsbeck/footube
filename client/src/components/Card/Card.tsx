@@ -2,8 +2,8 @@ import React from "react";
 
 import { format } from "timeago.js";
 
-import { useChannel } from "../hooks/hooks";
-import { IVideo } from "../interfaces/models";
+import { useChannel } from "../../hooks/useChannel";
+import { IVideo } from "../../interfaces/models";
 import {
 	ChannelImage,
 	ChannelName,
@@ -12,8 +12,8 @@ import {
 	Image,
 	Info,
 	Title,
-} from "../styles/styled-components/Card.style";
-import { ErrorAlert } from "./ErrorAlert";
+} from "./Card.style";
+import { ErrorAlert } from "../ErrorAlert/ErrorAlert";
 
 // Types
 interface CardProps {

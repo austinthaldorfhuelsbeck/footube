@@ -3,11 +3,13 @@ import React from "react";
 import { format } from "timeago.js";
 import { useSelector } from "react-redux";
 
-import { ErrorAlert } from "./ErrorAlert";
-import { RootState } from "../reducers/store";
-import { IComment } from "../interfaces/models";
-import { CircleImg } from "../styles/util.style";
-import { useChannel, useComment, useComments } from "../hooks/hooks";
+import { RootState } from "../../reducers/store";
+import { IComment } from "../../interfaces/models";
+import { useChannel } from "../../hooks/useChannel";
+import { CircleImg } from "../../styles/util.style";
+import { useComment } from "./useComment";
+import { ErrorAlert } from "../ErrorAlert/ErrorAlert";
+import { useComments } from "./useComments";
 import {
 	Button,
 	Date,
@@ -17,7 +19,7 @@ import {
 	NewComment,
 	Text,
 	TextArea,
-} from "../styles/styled-components/Comments.style";
+} from "./Comments.style";
 
 // Types
 interface CommentProps {
@@ -61,6 +63,7 @@ const CommentForm: React.FC<VideoProps> = ({ videoId }) => {
 const Comment: React.FC<CommentProps> = ({ comment }) => {
 	// get channel with hook
 	const { channel, err } = useChannel(comment.userId);
+
 	// add channel details when channel loads from db
 	return (
 		<>

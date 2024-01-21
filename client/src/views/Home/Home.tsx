@@ -2,9 +2,9 @@ import { PropsWithChildren, useEffect, useState } from "react";
 
 import axios, { AxiosResponse } from "axios";
 
-import { Card } from "../components/Card";
-import { IVideo } from "../interfaces/models";
-import { Container } from "../styles/styled-components/Home.style";
+import { Card } from "../../components/Card/Card";
+import { IVideo } from "../../interfaces/models";
+import { Container } from "./Home.style";
 
 interface ComponentProps {
 	type: string;

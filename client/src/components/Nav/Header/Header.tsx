@@ -1,18 +1,15 @@
 import { MenuOutlined } from "@mui/icons-material";
-import {
-	Container,
-	Img,
-	LogoLink,
-} from "../styles/styled-components/MenuHeader";
+import { Container, Img, LogoLink } from "./Header.style";
 
-import YouTubeLogo from "../img/logo.png";
+import YouTubeLogo from "../../../img/logo.png";
 import { SyntheticEvent } from "react";
 
 interface HeaderProps {
 	toggle: (e: SyntheticEvent<HTMLOrSVGElement>) => void;
 }
 
-export const MenuHeader: React.FC<HeaderProps> = ({ toggle }) => {
+// accepts a function for toggling show/hide menu on hamburger svg click
+export const Header: React.FC<HeaderProps> = ({ toggle }) => {
 	return (
 		<Container>
 			<MenuOutlined onClick={toggle} />

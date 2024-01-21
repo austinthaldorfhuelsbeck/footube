@@ -16,13 +16,13 @@ import {
 	ThumbUpOutlined,
 } from "@mui/icons-material";
 
-import { Card } from "../components/Card";
-import { RootState } from "../reducers/store";
-import { IUser } from "../interfaces/models";
-import { subscribe } from "../reducers/userSlice";
-import { Comments } from "../components/Comments";
-import { CircleImg } from "../styles/util.style";
-import { dislike, fetchSuccess, like } from "../reducers/videoSlice";
+import { Card } from "../../components/Card/Card";
+import { RootState } from "../../reducers/store";
+import { IUser } from "../../interfaces/models";
+import { subscribe } from "../../reducers/userSlice";
+import { Comments } from "../../components/Comments/Comments";
+import { CircleImg } from "../../styles/util.style";
+import { dislike, fetchSuccess, like } from "../../reducers/videoSlice";
 import {
 	Button,
 	Buttons,
@@ -39,8 +39,8 @@ import {
 	Subscribe,
 	Title,
 	VideoFrame,
-} from "../styles/styled-components/Video.style";
-import { Recommended } from "../components/Recommended";
+} from "./Video.style";
+import { Recommended } from "../../components/Recommended/Recommended";
 
 export function Video(): JSX.Element {
 	// Redux
@@ -146,7 +146,9 @@ export function Video(): JSX.Element {
 					<Comments videoId={currentVideo._id} />
 				</Content>
 			)}
-			<Recommended tags={currentVideo?.tags}></Recommended>
+			{currentVideo?.tags && (
+				<Recommended tags={currentVideo.tags}></Recommended>
+			)}
 		</Container>
 	);
 }

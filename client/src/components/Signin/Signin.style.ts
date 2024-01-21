@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -45,11 +46,11 @@ export const More = styled.div`
 	cursor: default;
 `;
 
-export const Links = styled.div`
+export const FooterLinks = styled.div`
 	margin-left: 50px;
 `;
 
-export const Link = styled.span`
+export const FooterLink = styled(Link)`
 	margin-left: 30px;
 	cursor: pointer;
 `;
