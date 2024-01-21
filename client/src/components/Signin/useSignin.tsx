@@ -8,7 +8,7 @@ import {
 } from "../../reducers/userSlice";
 import { UserCredential, signInWithPopup } from "firebase/auth";
 import { IApiResponse } from "../../interfaces/interfaces";
-import { login, loginGoogle } from "../../middleware/api";
+import { login } from "../../middleware/api";
 import { auth, provider } from "../../firebase";
 
 interface IFormData {
@@ -51,7 +51,7 @@ export const useSignin = (): UseSignin => {
 		dispatch(loginStart());
 		const load = async () => {
 			const userRes: UserCredential = await signInWithPopup(auth, provider);
-			const res: IApiResponse = await loginGoogle(userRes);
+			const res: IApiResponse = await login(userRes);
 			if (res.data) dispatch(loginSuccess(res.data));
 			if (res.error) dispatch(loginFailure());
 		};

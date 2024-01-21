@@ -47,27 +47,24 @@ export const fetchVideos = async (
 	return (await callExternalApi(config)) as IApiResponse;
 };
 
-export const login = async (cred: Partial<IUser>): Promise<IApiResponse> => {
-	const config: AxiosRequestConfig = {
-		url: "/api/auth/signin",
-		method: "POST",
-		data: cred,
-	};
-	return (await callExternalApi(config)) as IApiResponse;
-};
-
-export const loginGoogle = async (
-	cred: UserCredential,
+export const login = async (
+	cred: Partial<IUser> | UserCredential,
 ): Promise<IApiResponse> => {
 	const config: AxiosRequestConfig = {
-		url: "/api/auth/google",
 		method: "POST",
-		data: {
-			name: cred.user.displayName,
-			email: cred.user.email,
-			img: cred.user.photoURL,
-		},
 	};
+	const userCred = cred as UserCredential;
+	if (userCred.user) {
+		config.url = "/api/auth/google";
+		config.data = {
+			name: userCred.user.displayName,
+			email: userCred.user.email,
+			img: userCred.user.photoURL,
+		};
+	} else {
+		config.url = "/api/auth/signin";
+		config.data = cred;
+	}
 	return (await callExternalApi(config)) as IApiResponse;
 };
 
