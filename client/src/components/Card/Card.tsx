@@ -1,7 +1,5 @@
 import React from "react";
 
-import { format } from "timeago.js";
-
 import { useChannel } from "../../hooks/useChannel";
 import { IVideo } from "../../interfaces/models";
 import {
@@ -14,6 +12,7 @@ import {
 	Title,
 } from "./Card.style";
 import { ErrorAlert } from "../ErrorAlert/ErrorAlert";
+import { timeago } from "../../utils/timeago";
 
 // Types
 interface CardProps {
@@ -35,7 +34,7 @@ export const Card: React.FC<CardProps> = ({ type, video }) => {
 				<>
 					<Title>{video.title}</Title>
 					{channel && <ChannelName>{channel.name}</ChannelName>}
-					<Info>{`${video.views} views • ${format(video.createdAt)}`}</Info>
+					<Info>{`${video.views} views • ${timeago(video.createdAt)}`}</Info>
 				</>
 			</Details>
 			<ErrorAlert err={err} />

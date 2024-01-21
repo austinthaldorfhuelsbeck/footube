@@ -1,6 +1,5 @@
 import React from "react";
 
-import { format } from "timeago.js";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../../reducers/store";
@@ -20,6 +19,7 @@ import {
 	Text,
 	TextArea,
 } from "./Comments.style";
+import { timeago } from "../../utils/timeago";
 
 // Types
 interface CommentProps {
@@ -70,7 +70,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 			{channel && <CircleImg src={channel.img} />}
 			<Details>
 				{channel && <Name>{channel.name}</Name>}
-				<Date>{format(comment.createdAt)}</Date>
+				<Date>{timeago(comment.createdAt)}</Date>
 				<Text>{comment.desc}</Text>
 			</Details>
 			<ErrorAlert err={err} />

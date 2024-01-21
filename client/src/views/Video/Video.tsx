@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { Dispatch } from "redux";
-import { format } from "timeago.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import axios, { AxiosResponse } from "axios";
@@ -41,6 +40,7 @@ import {
 	VideoFrame,
 } from "./Video.style";
 import { Recommended } from "../../components/Recommended/Recommended";
+import { timeago } from "../../utils/timeago";
 
 export function Video(): JSX.Element {
 	// Redux
@@ -75,7 +75,6 @@ export function Video(): JSX.Element {
 	// fetch video and user on page load
 	useEffect(() => {
 		async function fetchData() {
-			// TODO error handling
 			const videoRes: AxiosResponse = await axios.get(`/api/videos/${id}`);
 			if (videoRes.data) {
 				dispatch(fetchSuccess(videoRes.data));
@@ -96,7 +95,7 @@ export function Video(): JSX.Element {
 					<Title>{currentVideo.title}</Title>
 					<Details>
 						<Info>
-							{`${currentVideo.views} views • ${format(
+							{`${currentVideo.views} views • ${timeago(
 								currentVideo.createdAt || "",
 							)}`}
 						</Info>

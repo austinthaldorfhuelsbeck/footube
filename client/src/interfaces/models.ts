@@ -1,6 +1,6 @@
 interface ITimestamps {
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface IUser extends ITimestamps {
