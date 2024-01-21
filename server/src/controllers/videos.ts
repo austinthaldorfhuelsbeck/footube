@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from "express";
 // Internal Modules
 import { Video } from "../db/models/Video";
 import { User } from "../db/models/User";
+import { MongoUser } from "../utils/passwords";
 
 export async function post(req: Request, res: Response, next: NextFunction) {
 	try {
@@ -106,16 +107,19 @@ export async function listRandom(
 export async function listSub(req: Request, res: Response, next: NextFunction) {
 	try {
 		// find user and subs
-		const user = await User.findById(res.locals.user.id);
+		const user: MongoUser | null = await User.findById(res.locals.user.id);
 		const subs = user?.subscribedUsers;
 		// get all subscriptions
-		const users = await Promise.all(
-			subs?.map((channelId: string) => Video.find({ userId: channelId })),
-		);
+		const users = subs
+			? await Promise.all(
+					subs.map((channelId: string) => Video.find({ userId: channelId })),
+			  )
+			: subs;
 		// flatten, sort, return
-		res
-			.status(200)
-			.json(users.flat().sort((a, b) => b.createdAt - a.createdAt));
+		if (users)
+			res
+				.status(200)
+				.json(users.flat().sort((a, b) => b.createdAt - a.createdAt));
 	} catch (err) {
 		next(err);
 	}

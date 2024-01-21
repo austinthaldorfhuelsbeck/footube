@@ -44,8 +44,8 @@ export async function destroy(req: Request, res: Response, next: NextFunction) {
 
 export async function read(req: Request, res: Response, next: NextFunction) {
 	try {
-		const user = await User.findById(req.params.id);
-		res.status(200).json(removePassword(user));
+		const user: MongoUser | null = await User.findById(req.params.id);
+		if (user) res.status(200).json(removePassword(user));
 	} catch (err) {
 		next(err);
 	}
