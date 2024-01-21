@@ -3,31 +3,25 @@ import { useEffect, useState } from "react";
 import { IVideo } from "../../interfaces/models";
 import { fetchVideos } from "../../middleware/api";
 import { IApiResponse, IAppError } from "../../interfaces/interfaces";
+import { useParams } from "react-router-dom";
 
-// for loading recommended videos on a video view page
-// input: tags of the current video
-// returns: array containing possible recommended videos; api error
-type UseRecommended = {
-	videos: (IVideo | undefined)[];
-	err?: IAppError;
-};
-export const useRecommended = (
-	tags: (string | undefined)[],
-): UseRecommended => {
-	// state for loading the videos
+export const useHome = (type?: string) => {
+	// get tags from url
+	const { tags } = useParams();
+	// state to store a list of videos
 	const [videos, setVideos] = useState<(IVideo | undefined)[]>([]);
 	// state for api errors
 	const [err, setErr] = useState<IAppError | undefined>();
 
-	// load videos matching tags
+	// fetch depending on type or tags
 	useEffect(() => {
-		async function load() {
-			const res: IApiResponse = await fetchVideos(undefined, tags);
+		const load = async () => {
+			const res: IApiResponse = await fetchVideos(type, tags?.split(","));
 			if (res.data) setVideos(res.data);
 			if (res.error) setErr(res.error);
-		}
+		};
 		load();
-	}, [tags]);
+	}, [type, tags]);
 
 	return { videos, err };
 };

@@ -47,6 +47,9 @@ export const App: React.FC = () => {
 								<Route path="video">
 									<Route path=":id" element={<Video />} />
 								</Route>
+								<Route path="explore">
+									<Route path=":tags" element={<Home />} />
+								</Route>
 							</Route>
 						</Routes>
 					</Wrapper>

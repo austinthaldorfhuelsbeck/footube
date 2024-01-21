@@ -1,26 +1,18 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import React from "react";
 
-import axios, { AxiosResponse } from "axios";
-
-import { Card } from "../../components/Card/Card";
-import { IVideo } from "../../interfaces/models";
+import { useHome } from "./useHome";
 import { Container } from "./Home.style";
+import { IVideo } from "../../interfaces/models";
+import { Card } from "../../components/Card/Card";
+import { ErrorAlert } from "../../components/ErrorAlert/ErrorAlert";
 
 interface ComponentProps {
-	type: string;
+	type?: string;
 }
 
-export function Home({ type }: PropsWithChildren<ComponentProps>): JSX.Element {
-	const [videos, setVideos] = useState<(IVideo | undefined)[]>([]);
-
-	useEffect(() => {
-		async function fetchVideos() {
-			// TODO error handling
-			const res: AxiosResponse = await axios.get(`/api/videos/${type}`);
-			if (res.data) setVideos(res.data);
-		}
-		fetchVideos();
-	}, [type]);
+export const Home: React.FC<ComponentProps> = ({ type }) => {
+	// use hook to fetch videos
+	const { videos, err } = useHome(type);
 
 	return (
 		<Container>
@@ -28,6 +20,7 @@ export function Home({ type }: PropsWithChildren<ComponentProps>): JSX.Element {
 				(video: IVideo | undefined) =>
 					video && <Card type="lg" key={video._id} video={video} />,
 			)}
+			<ErrorAlert err={err} />
 		</Container>
 	);
-}
+};

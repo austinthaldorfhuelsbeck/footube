@@ -3,23 +3,8 @@ import React, { SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import HomeIcon from "@mui/icons-material/Home";
-import {
-	AccountCircleOutlined,
-	ArticleOutlined,
-	ExposureOutlined,
-	FlagOutlined,
-	HistoryOutlined,
-	LibraryMusicOutlined,
-	LiveTvOutlined,
-	MovieCreationOutlined,
-	QuestionAnswerOutlined,
-	SettingsOutlined,
-	SportsBasketballOutlined,
-	SportsEsportsOutlined,
-	SubscriptionsOutlined,
-	VideoLibraryOutlined,
-} from "@mui/icons-material";
+
+
 
 import { Header } from "../Header/Header";
 import { NavbarProps } from "../Navbar/Navbar";
@@ -62,14 +47,18 @@ export const Menu: React.FC<MenuProps> = ({
 					</Item>
 				</Link>
 				<hr />
-				<Item>
-					<VideoLibraryOutlined />
-					Library
-				</Item>
-				<Item>
-					<HistoryOutlined />
-					History
-				</Item>
+				<Link to="/library">
+					<Item>
+						<VideoLibraryOutlined />
+						Library
+					</Item>
+				</Link>
+				<Link to="/history">
+					<Item>
+						<HistoryOutlined />
+						History
+					</Item>
+				</Link>
 				<hr />
 				{!currentUser && (
 					<>
@@ -86,43 +75,61 @@ export const Menu: React.FC<MenuProps> = ({
 					</>
 				)}
 				<Title>Best of FooTube</Title>
-				<Item>
-					<LibraryMusicOutlined />
-					Music
-				</Item>
-				<Item>
-					<SportsBasketballOutlined />
-					Sports
-				</Item>
-				<Item>
-					<SportsEsportsOutlined />
-					Gaming
-				</Item>
-				<Item>
-					<MovieCreationOutlined />
-					Movies
-				</Item>
-				<Item>
-					<ArticleOutlined />
-					News
-				</Item>
-				<Item>
-					<LiveTvOutlined />
-					Live
-				</Item>
+				<Link to="/explore/music">
+					<Item>
+						<LibraryMusicOutlined />
+						Music
+					</Item>
+				</Link>
+				<Link to="/explore/sports">
+					<Item>
+						<SportsBasketballOutlined />
+						Sports
+					</Item>
+				</Link>
+				<Link to="/explore/gaming">
+					<Item>
+						<SportsEsportsOutlined />
+						Gaming
+					</Item>
+				</Link>
+				<Link to="/explore/movies">
+					<Item>
+						<MovieCreationOutlined />
+						Movies
+					</Item>
+				</Link>
+				<Link to="/explore/news">
+					<Item>
+						<ArticleOutlined />
+						News
+					</Item>
+				</Link>
+				<Link to="/live">
+					<Item>
+						<LiveTvOutlined />
+						Live
+					</Item>
+				</Link>
 				<hr />
-				<Item>
-					<SettingsOutlined />
-					Settings
-				</Item>
-				<Item>
-					<FlagOutlined />
-					Report
-				</Item>
-				<Item>
-					<QuestionAnswerOutlined />
-					Help
-				</Item>
+				<Link to="/settings">
+					<Item>
+						<SettingsOutlined />
+						Settings
+					</Item>
+				</Link>
+				<Link to="/report">
+					<Item>
+						<FlagOutlined />
+						Report
+					</Item>
+				</Link>
+				<Link to="/help">
+					<Item>
+						<QuestionAnswerOutlined />
+						Help
+					</Item>
+				</Link>
 				<Item onClick={toggleTheme}>
 					<HomeIcon />
 					{isDarkMode ? "Light mode" : "Dark mode"}
