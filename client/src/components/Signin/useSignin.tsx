@@ -1,15 +1,15 @@
+import { UserCredential, signInWithPopup } from "firebase/auth";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
+import { useNavigate } from "react-router-dom";
+import { auth, provider } from "../../firebase";
+import { IApiResponse } from "../../interfaces/interfaces";
+import { login } from "../../middleware/api";
 import {
 	loginFailure,
 	loginStart,
 	loginSuccess,
 } from "../../reducers/userSlice";
-import { UserCredential, signInWithPopup } from "firebase/auth";
-import { IApiResponse } from "../../interfaces/interfaces";
-import { login } from "../../middleware/api";
-import { auth, provider } from "../../firebase";
 
 interface IFormData {
 	name: string;
@@ -29,7 +29,10 @@ export const useSignin = (): UseSignin => {
 		password: "",
 	});
 	// redux dispatch
-	const dispatch: Dispatch = useDispatch();
+	const dispatch = useDispatch();
+
+	// react router
+	const navigate = useNavigate();
 
 	// handlers
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +44,10 @@ export const useSignin = (): UseSignin => {
 		dispatch(loginStart());
 		const load = async () => {
 			const res: IApiResponse = await login(formData);
-			if (res.data) dispatch(loginSuccess(res.data));
+			if (res.data) {
+				dispatch(loginSuccess(res.data));
+				navigate("/");
+			}
 			if (res.error) dispatch(loginFailure());
 		};
 		load();

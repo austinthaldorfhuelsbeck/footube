@@ -3,9 +3,9 @@ import React from "react";
 import { InlineButton } from "../../styles/util.style";
 import {
 	Container,
-	Input,
 	FooterLink,
 	FooterLinks,
+	Input,
 	More,
 	Subtitle,
 	Title,
@@ -22,7 +22,12 @@ export const Signin: React.FC = () => {
 			<Wrapper>
 				<Title>Sign in</Title>
 				<Subtitle>to continue to FooTube</Subtitle>
-				<Input name="name" placeholder="username" onChange={onChange} />
+				<Input
+					name="email"
+					type="email"
+					placeholder="email"
+					onChange={onChange}
+				/>
 				<Input
 					name="password"
 					type="password"
